@@ -1,95 +1,109 @@
-﻿using System;
+﻿using FinalDSA.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinalDSA.Models
 {
     public class ExpenseManager
     {
-        public List<Expense> Expenses { get; private set; }
-        public double SpendingLimit { get; private set; }
+        private List<Expense> _expenses;
+        private double _spendingLimit;
 
         public ExpenseManager(double spendingLimit)
         {
-            Expenses = new List<Expense>();
-            SpendingLimit = spendingLimit;
+            _expenses = new List<Expense>();
+            _spendingLimit = spendingLimit;
         }
 
         public void AddExpense(string category, double amount, DateTime date, string description)
         {
-            Expenses.Add(new Expense(category, amount, date, description));
-            CheckSpendingLimit();
+            Expense expense = new Expense(category, amount, date, description);
+            _expenses.Add(expense);
+            Console.WriteLine("\nChi tiêu đã được thêm thành công!");
+            EvaluateSpending();
         }
 
         public void RemoveExpense(int index)
         {
-            if (index >= 0 && index < Expenses.Count)
+            if (index >= 0 && index < _expenses.Count)
             {
-                Expenses.RemoveAt(index);
+                _expenses.RemoveAt(index);
+                Console.WriteLine("\nChi tiêu đã được xóa thành công!");
+            }
+            else
+            {
+                Console.WriteLine("\nChỉ mục không hợp lệ!");
             }
         }
 
-        public void EditExpense(int index, string newCategory, double newAmount, DateTime newDate, string newDescription)
+        public void EditExpense(int index, string category, double amount, DateTime date, string description)
         {
-            if (index >= 0 && index < Expenses.Count)
+            if (index >= 0 && index < _expenses.Count)
             {
-                Expenses[index] = new Expense(newCategory, newAmount, newDate, newDescription);
-                CheckSpendingLimit();
+                _expenses[index].Category = category;
+                _expenses[index].Amount = amount;
+                _expenses[index].Date = date;
+                _expenses[index].Description = description;
+                Console.WriteLine("\nChi tiêu đã được sửa thành công!");
+            }
+            else
+            {
+                Console.WriteLine("\nChỉ mục không hợp lệ!");
             }
         }
 
-        public void CheckSpendingLimit()
+        public void DisplayExpenses()
         {
-            double totalSpent = Expenses.Sum(e => e.Amount);
-            if (totalSpent > SpendingLimit)
+            if (_expenses.Count > 0)
             {
-                Console.WriteLine("CẢNH BÁO: Bạn đã vượt quá giới hạn chi tiêu!");
-            }
-        }
-
-        public void SortByDate() => Expenses = MergeSort(Expenses, (e1, e2) => e1.Date.CompareTo(e2.Date));
-        public void SortByCategory() => Expenses = MergeSort(Expenses, (e1, e2) => e1.Category.CompareTo(e2.Category));
-        public void SortByAmount() => Expenses = MergeSort(Expenses, (e1, e2) => e1.Amount.CompareTo(e2.Amount));
-
-        private List<Expense> MergeSort(List<Expense> list, Comparison<Expense> comparison)
-        {
-            if (list.Count <= 1) return list;
-
-            int mid = list.Count / 2;
-            List<Expense> left = MergeSort(list.GetRange(0, mid), comparison);
-            List<Expense> right = MergeSort(list.GetRange(mid, list.Count - mid), comparison);
-
-            return Merge(left, right, comparison);
-        }
-
-        private List<Expense> Merge(List<Expense> left, List<Expense> right, Comparison<Expense> comparison)
-        {
-            List<Expense> result = new List<Expense>();
-            int i = 0, j = 0;
-
-            while (i < left.Count && j < right.Count)
-            {
-                if (comparison(left[i], right[j]) <= 0)
+                Console.WriteLine("\nDanh sách chi tiêu:");
+                for (int i = 0; i < _expenses.Count; i++)
                 {
-                    result.Add(left[i]);
-                    i++;
-                }
-                else
-                {
-                    result.Add(right[j]);
-                    j++;
+                    var expense = _expenses[i];
+                    Console.WriteLine($"{i}. {expense.Category}, {expense.Amount}, {expense.Date}, {expense.Description}");
                 }
             }
-
-            result.AddRange(left.GetRange(i, left.Count - i));
-            result.AddRange(right.GetRange(j, right.Count - j));
-
-            return result;
+            else
+            {
+                Console.WriteLine("\nChưa có chi tiêu nào.");
+            }
         }
 
-        public double GetTotalSpent() => Expenses.Sum(e => e.Amount);
+        public void SortByCategory()
+        {
+            _expenses = _expenses.OrderBy(e => e.Category).ToList();
+            Console.WriteLine("\nDanh sách đã được sắp xếp theo danh mục.");
+            DisplayExpenses();
+        }
+
+        public void SortByAmount()
+        {
+            _expenses = _expenses.OrderBy(e => e.Amount).ToList();
+            Console.WriteLine("\nDanh sách đã được sắp xếp theo số tiền.");
+            DisplayExpenses();
+        }
+
+        public void SortByDate()
+        {
+            _expenses = _expenses.OrderBy(e => e.Date).ToList();
+            Console.WriteLine("\nDanh sách đã được sắp xếp theo ngày.");
+            DisplayExpenses();
+        }
+
+        public void EvaluateSpending()
+        {
+            double totalSpent = _expenses.Sum(e => e.Amount);
+            double remaining = _spendingLimit - totalSpent;
+
+            Console.WriteLine($"\nTổng số tiền đã chi tiêu: {totalSpent}");
+            Console.WriteLine($"Giới hạn chi tiêu: {_spendingLimit}");
+            Console.WriteLine($"Số tiền còn lại: {remaining}");
+
+            if (remaining < 0)
+            {
+                Console.WriteLine("\nCẢNH BÁO: Bạn đã vượt quá giới hạn chi tiêu!");
+            }
+        }
     }
-
 }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FinalDSA.Models;
+﻿using FinalDSA.Models;
 using FinalDSA.Views;
+using System;
 
 namespace FinalDSA.Controllers
 {
@@ -25,8 +21,7 @@ namespace FinalDSA.Controllers
             do
             {
                 _view.DisplayMenu();
-                Console.Write("\nNhập lựa chọn của bạn: ");
-                choice = int.Parse(Console.ReadLine());
+                choice = _view.GetUserChoice();
 
                 switch (choice)
                 {
@@ -37,7 +32,13 @@ namespace FinalDSA.Controllers
                         HandleSortOptions();
                         break;
                     case 3:
-                        EvaluateSpending();
+                        _manager.EvaluateSpending();
+                        break;
+                    case 0:
+                        Console.WriteLine("\nCảm ơn bạn đã sử dụng chương trình. Tạm biệt!");
+                        break;
+                    default:
+                        Console.WriteLine("\nLựa chọn không hợp lệ. Vui lòng thử lại.");
                         break;
                 }
             } while (choice != 0);
@@ -45,50 +46,42 @@ namespace FinalDSA.Controllers
 
         private void HandleExpenseOptions()
         {
+            Console.Clear();
             Console.WriteLine("1. Thêm chi tiêu");
             Console.WriteLine("2. Xóa chi tiêu");
             Console.WriteLine("3. Sửa chi tiêu");
+            Console.Write("\nChọn chức năng: ");
             int option = int.Parse(Console.ReadLine());
 
             switch (option)
             {
                 case 1:
-                    Console.Write("Danh mục: ");
-                    string category = Console.ReadLine();
-                    Console.Write("Số tiền: ");
-                    double amount = double.Parse(Console.ReadLine());
-                    DateTime date = DateTime.Now;
-                    Console.Write("Mô tả: ");
-                    string description = Console.ReadLine();
-                    _manager.AddExpense(category, amount, date, description);
+                    Expense newExpense = _view.GetExpenseInput();
+                    _manager.AddExpense(newExpense.Category, newExpense.Amount, newExpense.Date, newExpense.Description);
                     break;
                 case 2:
-                    _view.DisplayExpenses(_manager.Expenses);
-                    Console.Write("Nhập chỉ mục chi tiêu cần xóa: ");
-                    int removeIndex = int.Parse(Console.ReadLine());
+                    _manager.DisplayExpenses();
+                    int removeIndex = _view.GetExpenseIndex();
                     _manager.RemoveExpense(removeIndex);
                     break;
                 case 3:
-                    _view.DisplayExpenses(_manager.Expenses);
-                    Console.Write("Nhập chỉ mục chi tiêu cần sửa: ");
-                    int editIndex = int.Parse(Console.ReadLine());
-                    Console.Write("Danh mục mới: ");
-                    string newCategory = Console.ReadLine();
-                    Console.Write("Số tiền mới: ");
-                    double newAmount = double.Parse(Console.ReadLine());
-                    DateTime newDate = DateTime.Now;
-                    Console.Write("Mô tả mới: ");
-                    string newDescription = Console.ReadLine();
-                    _manager.EditExpense(editIndex, newCategory, newAmount, newDate, newDescription);
+                    _manager.DisplayExpenses();
+                    int editIndex = _view.GetExpenseIndex();
+                    Expense editedExpense = _view.GetExpenseInput();
+                    _manager.EditExpense(editIndex, editedExpense.Category, editedExpense.Amount, editedExpense.Date, editedExpense.Description);
+                    break;
+                default:
+                    Console.WriteLine("Lựa chọn không hợp lệ.");
                     break;
             }
         }
 
         private void HandleSortOptions()
         {
+            Console.Clear();
             Console.WriteLine("1. Sắp xếp theo danh mục");
             Console.WriteLine("2. Sắp xếp theo số tiền");
-            Console.WriteLine("3. Sắp xếp theo ngày");
+            Console.Write("\nChọn chức năng: ");
             int option = int.Parse(Console.ReadLine());
 
             switch (option)
@@ -99,19 +92,10 @@ namespace FinalDSA.Controllers
                 case 2:
                     _manager.SortByAmount();
                     break;
-                case 3:
-                    _manager.SortByDate();
+                default:
+                    Console.WriteLine("Lựa chọn không hợp lệ.");
                     break;
             }
-            _view.DisplayExpenses(_manager.Expenses);
-        }
-
-        private void EvaluateSpending()
-        {
-            double totalSpent = _manager.GetTotalSpent();
-            Console.WriteLine($"\nTổng chi tiêu: {totalSpent}");
-            _view.DisplayRemainingSpending(_manager.SpendingLimit - totalSpent);
         }
     }
-
 }
