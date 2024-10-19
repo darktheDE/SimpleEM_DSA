@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinalDSA.Models
 {
-    public struct Expense
+    public class Expense
     {
         public string Category { get; set; }
         public double Amount { get; set; }
@@ -21,5 +17,4 @@ namespace FinalDSA.Models
             Description = description;
         }
     }
-
 }
