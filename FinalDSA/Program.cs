@@ -10,7 +10,7 @@ namespace ExpenseTracker
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8; // Đảm bảo hiển thị tiếng Việt tốt
-            RunProgram();
+            RunProgram(); ///aaaaaaaaaaaaaaaaa
         }
 
         static void RunProgram()
