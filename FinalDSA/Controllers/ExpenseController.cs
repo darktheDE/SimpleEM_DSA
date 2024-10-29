@@ -47,6 +47,9 @@ namespace FinalDSA.Controllers
         private void HandleExpenseOptions()
         {
             Console.Clear();
+            //Trong Phu thêm vô nà
+            Console.WriteLine("\u001b[31mĐây là màu đỏ\u001b[0m");
+            //
             Console.WriteLine("1. Thêm chi tiêu");
             Console.WriteLine("2. Xóa chi tiêu");
             Console.WriteLine("3. Sửa chi tiêu");
