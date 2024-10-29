@@ -8,13 +8,6 @@ namespace ExpenseTracker
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            Console.OutputEncoding = System.Text.Encoding.UTF8; // Đảm bảo hiển thị tiếng Việt tốt
-            RunProgram();
-
-        }// Duy was here
-
         static void RunProgram()
         {
             Console.Clear();
@@ -48,12 +41,18 @@ namespace ExpenseTracker
 
         static double GetSpendingLimit()
         {
-            Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
             while (true)
             {
                 try
                 {
-                    double limit = double.Parse(Console.ReadLine());
+                    double limit = 0;
+                    while (true)
+                    {
+                        Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
+                        if (double.TryParse(Console.ReadLine(), out limit))
+                            break;
+                        Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
+                    }
                     if (limit >= 0)
                         return limit;
                     else

@@ -79,14 +79,29 @@ namespace FinalDSA.Views
 
         public int GetExpenseIndex()
         {
-            Console.Write("Nhập chỉ mục chi tiêu: ");
-            return int.Parse(Console.ReadLine());
+            int expends = 0;
+            while (true)
+            {
+                Console.Write("Nhập chỉ mục chi tiêu: ");
+                if (int.TryParse(Console.ReadLine(), out expends))
+                    break;
+                Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
+            }
+            return expends;
         }
 
         public double GetSpendingLimit()
         {
+            double spendingExpends = 0;
+            while (true)
+            {
+                Console.Write("Nhập chỉ mục chi tiêu: ");
+                if (double.TryParse(Console.ReadLine(), out spendingExpends))
+                    break;
+                Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
+            }
             Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
-            return double.Parse(Console.ReadLine());
+            return spendingExpends;
         }
     }
 }
