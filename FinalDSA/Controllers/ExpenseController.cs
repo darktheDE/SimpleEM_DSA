@@ -11,7 +11,7 @@ namespace FinalDSA.Controllers
     public class ExpenseController
     {
         private ExpenseManager _manager;
-        private ExpenseView _view;
+        private ExpenseView _view;//dsadas
 
         public ExpenseController(ExpenseManager manager, ExpenseView view)
         {
