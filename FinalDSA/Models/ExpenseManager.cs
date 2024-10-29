@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.Xml.Linq;
 
 namespace FinalDSA.Models
 {
@@ -9,17 +11,60 @@ namespace FinalDSA.Models
     {
         private List<Expense> _expenses;
         private double _spendingLimit;
+        private readonly string _filePath = "data.txt";
 
         public ExpenseManager(double spendingLimit)
         {
             _expenses = new List<Expense>();
             _spendingLimit = spendingLimit;
+            LoadData();
+        }
+        private void LoadData()
+        {
+            if (File.Exists(_filePath))
+            {
+                string[] lines = File.ReadAllLines(_filePath);
+                if (lines.Length > 0)
+                {
+                    // Đọc spendingLimit từ dòng đầu tiên
+                    double.TryParse(lines[0], out _spendingLimit);
+
+                    // Đọc các chi tiêu từ các dòng tiếp theo
+                    for (int i = 1; i < lines.Length; i++)
+                    {
+                        var parts = lines[i].Split(", ");
+                        if (parts.Length == 4)
+                        {
+                            string category = parts[0];
+                            double.TryParse(parts[1], out double amount);
+                            DateTime.TryParse(parts[2], out DateTime date);
+                            string description = parts[3];
+                            _expenses.Add(new Expense(category, amount, date, description));
+                        }
+                    }
+                }
+            }
+        }
+        private void SaveData()
+        {
+            using (StreamWriter writer = new StreamWriter(_filePath))
+            {
+                // Ghi spendingLimit vào dòng đầu tiên
+                writer.WriteLine(_spendingLimit);
+
+                // Ghi danh sách chi tiêu
+                foreach (var expense in _expenses)
+                {
+                    writer.WriteLine($"{expense.Category}, {expense.Amount}, {expense.Date}, {expense.Description}");
+                }
+            }
         }
 
         public void AddExpense(string category, double amount, DateTime date, string description)
         {
             Expense expense = new Expense(category, amount, date, description);
             _expenses.Add(expense);
+            SaveData();
             Console.WriteLine("\nChi tiêu đã được thêm thành công!");
             EvaluateSpending();
         }
@@ -29,6 +74,7 @@ namespace FinalDSA.Models
             if (index >= 0 && index < _expenses.Count)
             {
                 _expenses.RemoveAt(index);
+                SaveData();
                 Console.WriteLine("\nChi tiêu đã được xóa thành công!");
             }
             else
@@ -45,6 +91,7 @@ namespace FinalDSA.Models
                 _expenses[index].Amount = amount;
                 _expenses[index].Date = date;
                 _expenses[index].Description = description;
+                SaveData();
                 Console.WriteLine("\nChi tiêu đã được sửa thành công!");
             }
             else
