@@ -1,6 +1,6 @@
 # 💸 Simple Expense Management (SimpleEM_DSA)
 
-**SimpleEM_DSA** is a basic console application for managing daily expenses, created as a final project for the Data Structures and Algorithms (DSA) course of HCMUUTE. This application allows users to input expenses, view them in a sorted manner, and interact with a simple console-based UI.
+**SimpleEM_DSA** is a basic console application for managing daily expenses, created as a final project for the Data Structures and Algorithms (DSA) course of HCMUTE. This application allows users to input expenses, view them in a sorted manner, and interact with a simple console-based UI.
 
 ---
 
