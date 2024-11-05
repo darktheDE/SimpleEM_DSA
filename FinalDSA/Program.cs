@@ -52,10 +52,6 @@ namespace ExpenseTracker
 
         static double GetSpendingLimit()
         {
-            Console.ForegroundColor = ConsoleColor.Blue; // Thay đổi màu chữ thành xanh dương
-            Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
-            // Đặt lại màu về mặc định
-            Console.ResetColor();
             while (true)
             {
                 try
@@ -63,7 +59,10 @@ namespace ExpenseTracker
                     double limit = 0;
                     while (true)
                     {
+                        Console.ForegroundColor = ConsoleColor.Blue; // Thay đổi màu chữ thành xanh dương
                         Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
+                         // Đặt lại màu về mặc định
+                        Console.ResetColor();
                         if (double.TryParse(Console.ReadLine(), out limit))
                             break;
                         Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
