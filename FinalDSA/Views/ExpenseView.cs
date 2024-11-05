@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using FinalDSA.Models;
 
 namespace FinalDSA.Views
@@ -111,6 +112,15 @@ namespace FinalDSA.Views
             Console.WriteLine("║Nhập chỉ mục chi tiêu:                              ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
             return int.Parse(Console.ReadLine());
+            int expends = 0;
+            while (true)
+            {
+                Console.Write("Nhập chỉ mục chi tiêu: ");
+                if (int.TryParse(Console.ReadLine(), out expends))
+                    break;
+                Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
+            }
+            return expends;
         }
 
         public double GetSpendingLimit()
@@ -119,6 +129,16 @@ namespace FinalDSA.Views
             Console.WriteLine("║Nhập giới hạn chi tiêu của bạn                      ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
             return double.Parse(Console.ReadLine());
+            double spendingExpends = 0;
+            while (true)
+            {
+                Console.Write("Nhập chỉ mục chi tiêu: ");
+                if (double.TryParse(Console.ReadLine(), out spendingExpends))
+                    break;
+                Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
+            }
+            Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
+            return spendingExpends;
         }
     }
 }

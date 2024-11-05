@@ -1,6 +1,6 @@
-﻿using FinalDSA.Models;
+﻿using System;
+using FinalDSA.Models;
 using FinalDSA.Views;
-using System;
 
 namespace FinalDSA.Controllers
 {
@@ -15,13 +15,52 @@ namespace FinalDSA.Controllers
             _view = view;
         }
 
+        // Phương thức an toàn để nhập số nguyên
+        private int InputInteger(string prompt)
+        {
+            int value;
+            while (true)
+            {
+                Console.Write(prompt);
+                if (int.TryParse(Console.ReadLine(), out value))
+                    return value;
+                Console.WriteLine("Vui lòng nhập một số nguyên hợp lệ.");
+            }
+        }
+
+        // Phương thức an toàn để nhập số thực
+        private double InputDouble(string prompt)
+        {
+            double value;
+            while (true)
+            {
+                Console.Write(prompt);
+                if (double.TryParse(Console.ReadLine(), out value))
+                    return value;
+                Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
+            }
+        }
+
+        // Phương thức an toàn để nhập số thực (float)
+        private float InputFloat(string prompt)
+        {
+            float value;
+            while (true)
+            {
+                Console.Write(prompt);
+                if (float.TryParse(Console.ReadLine(), out value))
+                    return value;
+                Console.WriteLine("Vui lòng nhập một số thực (float) hợp lệ.");
+            }
+        }
+
         public void Run()
         {
             int choice;
             do
             {
                 _view.DisplayMenu();
-                choice = _view.GetUserChoice();
+                choice = InputInteger("\nNhập lựa chọn của bạn (1-3, hoặc 0 để thoát): ");
 
                 switch (choice)
                 {
@@ -57,6 +96,11 @@ namespace FinalDSA.Controllers
             Console.WriteLine("║ 3 │ Sửa                                            ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
             int option = int.Parse(Console.ReadLine());
+            Console.WriteLine("1. Thêm chi tiêu");
+            Console.WriteLine("2. Xóa chi tiêu");
+            Console.WriteLine("3. Sửa chi tiêu");
+
+            int option = InputInteger("\nChọn chức năng: ");
 
             switch (option)
             {
@@ -66,12 +110,12 @@ namespace FinalDSA.Controllers
                     break;
                 case 2:
                     _manager.DisplayExpenses();
-                    int removeIndex = _view.GetExpenseIndex();
+                    int removeIndex = InputInteger("Nhập chỉ mục chi tiêu để xóa: ");
                     _manager.RemoveExpense(removeIndex);
                     break;
                 case 3:
                     _manager.DisplayExpenses();
-                    int editIndex = _view.GetExpenseIndex();
+                    int editIndex = InputInteger("Nhập chỉ mục chi tiêu để sửa: ");
                     Expense editedExpense = _view.GetExpenseInput();
                     _manager.EditExpense(editIndex, editedExpense.Category, editedExpense.Amount, editedExpense.Date, editedExpense.Description);
                     break;
@@ -93,7 +137,10 @@ namespace FinalDSA.Controllers
             Console.WriteLine("║ 2 │ Sắp xếp theo tiền                              ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
             int option = int.Parse(Console.ReadLine());
+            Console.WriteLine("1. Sắp xếp theo danh mục");
+            Console.WriteLine("2. Sắp xếp theo số tiền");
 
+            int option = InputInteger("\nChọn chức năng: ");
             switch (option)
             {
                 case 1:
