@@ -81,5 +81,5 @@
 3. Build and run the application from the solution to start managing your expenses.
 
 ---
-**Thank you for checking out SimpleEM_DSA! 🎉**
+## **Thank you for checking out SimpleEM_DSA! 🎉**
 
