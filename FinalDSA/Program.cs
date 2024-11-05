@@ -8,12 +8,23 @@ namespace ExpenseTracker
 {
     class Program
     {
+        static void Main(string[] args)
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8; // Đảm bảo hiển thị tiếng Việt tốt
+            RunProgram();
+        }
         static void RunProgram()
         {
             Console.Clear();
-            Console.WriteLine("******************************");
-            Console.WriteLine("* QUẢN LÝ CHI TIÊU CÁ NHÂN    *");
-            Console.WriteLine("******************************");
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            Console.WriteLine("║             QUẢN LÝ CHI TIÊU CÁ NHÂN               ║");
+            Console.WriteLine("╠════════════════════════════════════════════════════╣");
+            Console.WriteLine("║ 23133056: Phan Trọng Phú                           ║");
+            Console.WriteLine("║ 23133061: Phan Trọng Quí                           ║");
+            Console.WriteLine("║ 23133030: Đỗ Kiến Hưng                             ║");
+            Console.WriteLine("║ 23110086: Nguyễn Văn Quang Duy                     ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+
 
             // Yêu cầu người dùng nhập giới hạn chi tiêu
             double spendingLimit;
@@ -41,6 +52,10 @@ namespace ExpenseTracker
 
         static double GetSpendingLimit()
         {
+            Console.ForegroundColor = ConsoleColor.Blue; // Thay đổi màu chữ thành xanh dương
+            Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
+            // Đặt lại màu về mặc định
+            Console.ResetColor();
             while (true)
             {
                 try

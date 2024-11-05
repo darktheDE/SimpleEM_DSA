@@ -1,4 +1,5 @@
-﻿using FinalDSA.Models;
+﻿// Models/ExpenseManager.cs
+using FinalDSA.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -104,12 +105,30 @@ namespace FinalDSA.Models
         {
             if (_expenses.Count > 0)
             {
-                Console.WriteLine("\nDanh sách chi tiêu:");
+                // In bảng chi tiêu hiện tại trong khung bao quanh
+                Console.Clear();
+                Console.WriteLine("╔════════════════════════════════════════════════════╗");
+                Console.WriteLine("║              BẢNG DANH SÁCH CHI TIÊU               ║");
+                Console.WriteLine("╚════════════════════════════════════════════════════╝");
+
+                // In tiêu đề bảng
+                Console.WriteLine("╔═════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine("║ {0,-5} {1,-20} {2,-15} {3,-25} {4,-30} ║", "STT", "Danh mục", "Số tiền", "Ngày", "Mô tả");
+                Console.WriteLine("╚═════════════════════════════════════════════════════════════════════════════════════════════════════╝");
+
+                // Duyệt qua danh sách chi tiêu và in từng mục
                 for (int i = 0; i < _expenses.Count; i++)
                 {
-                    var expense = _expenses[i];
-                    Console.WriteLine($"{i}. {expense.Category}, {expense.Amount}, {expense.Date}, {expense.Description}");
+                    Console.WriteLine("║ {0,-5} {1,-20} {2,-15:F2} {3,-25} {4,-30} ║",
+                        i + 1,                                  // STT
+                        _expenses[i].Category,                   // Danh mục
+                        _expenses[i].Amount,                     // Số tiền
+                        _expenses[i].Date.ToString("yyyy-MM-dd HH:mm:ss"), // Ngày
+                        _expenses[i].Description);               // Mô tả
                 }
+
+                // Kết thúc bảng
+                Console.WriteLine("╚═════════════════════════════════════════════════════════════════════════════════════════════════════╝");
             }
             else
             {
@@ -119,8 +138,8 @@ namespace FinalDSA.Models
 
         public void SortByCategory()
         {
+            //Sử dụng hàm
             _expenses = _expenses.OrderBy(e => e.Category).ToList();
-            Console.WriteLine("\nDanh sách đã được sắp xếp theo danh mục.");
             DisplayExpenses();
         }
 
@@ -143,13 +162,22 @@ namespace FinalDSA.Models
             double totalSpent = _expenses.Sum(e => e.Amount);
             double remaining = _spendingLimit - totalSpent;
 
-            Console.WriteLine($"\nTổng số tiền đã chi tiêu: {totalSpent}");
-            Console.WriteLine($"Giới hạn chi tiêu: {_spendingLimit}");
-            Console.WriteLine($"Số tiền còn lại: {remaining}");
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            Console.WriteLine("║              TỔNG QUAN VỀ CHI TIÊU                 ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+
+            // Hiển thị thông tin
+            Console.WriteLine("\n╔════════════════════════════════════════════════════╗");
+            Console.WriteLine($"║ Tổng số tiền đã chi tiêu: {totalSpent}                            ");
+            Console.WriteLine($"║ Giới hạn chi tiêu        : {_spendingLimit}                       ");
+            Console.WriteLine($"║ Số tiền còn lại          : {remaining}                            ");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
 
             if (remaining < 0)
             {
-                Console.WriteLine("\nCẢNH BÁO: Bạn đã vượt quá giới hạn chi tiêu!");
+                Console.WriteLine("╔════════════════════════════════════════════════════╗");
+                Console.WriteLine("║CẢNH BÁO : BẠN ĐÃ VƯỢT QUÁ CHI TIÊU!!!              ║");
+                Console.WriteLine("╚════════════════════════════════════════════════════╝");
             }
         }
     }
