@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using FinalDSA.Models;
-
+using System.Text;
+using FinalDSA.Controllers;
 namespace FinalDSA.Views
 {
     public class ExpenseView
@@ -93,13 +94,56 @@ namespace FinalDSA.Views
 
         public Expense GetExpenseInput()
         {
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.UTF8;
+            
             Console.WriteLine("╔════════════════════════════════════════════════════╗");
-            Console.Write(    "║Nhập danh mục: ");
+            Console.Write("║Nhập danh mục: ");
             string category = Console.ReadLine();
-            Console.Write(    "║Nhập số tiền: ");
+            
+            Console.Write("║Nhập số tiền: ");
             double amount = double.Parse(Console.ReadLine());
-            DateTime date = DateTime.Now;  // Real-time
-            Console.Write(    "║Nhập mô tả: ");
+
+            DateTime date = DateTime.Now;  // Khởi tạo mặc định với thời gian thực
+            Console.Write("Chọn 1(thời gian thực), 2(tự nhập): ");
+            
+            int option;
+            if (int.TryParse(Console.ReadLine(), out option))
+            {
+                switch (option)
+                {
+                    case 1:
+                        date = DateTime.Now;  // Thời gian thực
+                        break;
+                    case 2:
+                        Console.Write("Nhập ngày (theo định dạng yyyy-MM-dd): ");
+                        string inputDate = Console.ReadLine();
+
+                        Console.Write("Nhập giờ (theo định dạng HH:mm:ss): ");
+                        string inputTime = Console.ReadLine();
+
+                        // Ghép chuỗi ngày và giờ lại với nhau
+                        string inputDateTime = inputDate + " " + inputTime;
+
+                        // Cố gắng chuyển đổi chuỗi nhập thành kiểu DateTime
+                        if (!DateTime.TryParse(inputDateTime, out date))
+                        {
+                            Console.WriteLine("Định dạng ngày giờ không hợp lệ. Sử dụng thời gian thực thay thế.");
+                            date = DateTime.Now;
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("Lựa chọn không hợp lệ. Sử dụng thời gian thực thay thế.");
+                        date = DateTime.Now;
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Lựa chọn không hợp lệ. Sử dụng thời gian thực thay thế.");
+            }
+
+            Console.Write("║Nhập mô tả: ");
             string description = Console.ReadLine();
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
 
