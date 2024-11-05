@@ -168,20 +168,30 @@ namespace FinalDSA.Models
 
             // Hiển thị thông tin
             Console.WriteLine("\n╔════════════════════════════════════════════════════╗");
-            Console.WriteLine($"║ Tổng số tiền đã chi tiêu: {totalSpent}                            ");
-            Console.WriteLine($"║ Giới hạn chi tiêu        : {_spendingLimit}                       ");
-            Console.WriteLine($"║ Số tiền còn lại          : {remaining}                            ");
+            Console.WriteLine($"     Tổng số tiền đã chi tiêu: {totalSpent}                            ");
+            Console.WriteLine($"     Giới hạn chi tiêu        : {_spendingLimit}                       ");
+            Console.WriteLine($"     Số tiền còn lại          : {remaining}                            ");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
 
             if (remaining < 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red; // Thay đổi màu chữ thành xanh dương
+                Console.ForegroundColor = ConsoleColor.Red; // Thay đổi màu chữ thành xanh đỏ
                 Console.WriteLine("╔════════════════════════════════════════════════════╗");
                 Console.WriteLine("║CẢNH BÁO : BẠN ĐÃ VƯỢT QUÁ CHI TIÊU!!!              ║");
                 Console.WriteLine("╚════════════════════════════════════════════════════╝");
                 Console.ResetColor();
 
             }
+            if (remaining/totalSpent < 0.3)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow; // Thay đổi màu chữ thành vàng
+                Console.WriteLine("╔════════════════════════════════════════════════════╗");
+                Console.WriteLine("║CẢNH BÁO : BẠN ĐÃ VƯỢT 70% CHI TIÊU!!!              ║");
+                Console.WriteLine("╚════════════════════════════════════════════════════╝");
+                Console.ResetColor();
+
+            }
+            
         }
     }
 }

@@ -91,9 +91,9 @@ namespace FinalDSA.Controllers
             Console.WriteLine("╔════════════════════════════════════════════════════╗");
             Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
-            Console.WriteLine("║ 1 │ Thêm                                           ║");
-            Console.WriteLine("║ 2 │ Xóa                                            ║");
-            Console.WriteLine("║ 3 │ Sửa                                            ║");
+            Console.WriteLine("║ 1 │ Thêm chi tiêu                                  ║");
+            Console.WriteLine("║ 2 │ Xóa chi tiêu                                   ║");
+            Console.WriteLine("║ 3 │ Chỉnh sửa chi tiêu                             ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
 
             int option = InputInteger("\nChọn chức năng: ");
@@ -131,6 +131,7 @@ namespace FinalDSA.Controllers
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
             Console.WriteLine("║ 1 │ Sắp xếp theo danh mục                          ║");
             Console.WriteLine("║ 2 │ Sắp xếp theo tiền                              ║");
+            Console.WriteLine("║ 3 │ Sắp xếp theo thời gian                         ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
 
             int option = InputInteger("\nChọn chức năng: ");
@@ -141,6 +142,9 @@ namespace FinalDSA.Controllers
                     break;
                 case 2:
                     _manager.SortByAmount();
+                    break;
+                case 3:
+                    _manager.SortByDate();
                     break;
                 default:
                     Console.WriteLine("Lựa chọn không hợp lệ.");
