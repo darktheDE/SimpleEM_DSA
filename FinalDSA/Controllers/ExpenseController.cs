@@ -95,10 +95,6 @@ namespace FinalDSA.Controllers
             Console.WriteLine("║ 2 │ Xóa                                            ║");
             Console.WriteLine("║ 3 │ Sửa                                            ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
-            int option = int.Parse(Console.ReadLine());
-            Console.WriteLine("1. Thêm chi tiêu");
-            Console.WriteLine("2. Xóa chi tiêu");
-            Console.WriteLine("3. Sửa chi tiêu");
 
             int option = InputInteger("\nChọn chức năng: ");
 
@@ -136,9 +132,6 @@ namespace FinalDSA.Controllers
             Console.WriteLine("║ 1 │ Sắp xếp theo danh mục                          ║");
             Console.WriteLine("║ 2 │ Sắp xếp theo tiền                              ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
-            int option = int.Parse(Console.ReadLine());
-            Console.WriteLine("1. Sắp xếp theo danh mục");
-            Console.WriteLine("2. Sắp xếp theo số tiền");
 
             int option = InputInteger("\nChọn chức năng: ");
             switch (option)
