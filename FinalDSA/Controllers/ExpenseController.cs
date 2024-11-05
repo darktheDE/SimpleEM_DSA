@@ -38,7 +38,9 @@ namespace FinalDSA.Controllers
                         Console.WriteLine("\nCảm ơn bạn đã sử dụng chương trình. Tạm biệt!");
                         break;
                     default:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\nLựa chọn không hợp lệ. Vui lòng thử lại.");
+                        Console.ResetColor();
                         break;
                 }
             } while (choice != 0);
@@ -47,13 +49,13 @@ namespace FinalDSA.Controllers
         private void HandleExpenseOptions()
         {
             Console.Clear();
-            //Trong Phu thêm vô nà
-            Console.WriteLine("\u001b[31mĐây là màu đỏ\u001b[0m");
-            //
-            Console.WriteLine("1. Thêm chi tiêu");
-            Console.WriteLine("2. Xóa chi tiêu");
-            Console.WriteLine("3. Sửa chi tiêu");
-            Console.Write("\nChọn chức năng: ");
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+            Console.WriteLine("║ 1 │ Thêm                                           ║");
+            Console.WriteLine("║ 2 │ Xóa                                            ║");
+            Console.WriteLine("║ 3 │ Sửa                                            ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
             int option = int.Parse(Console.ReadLine());
 
             switch (option)
@@ -74,7 +76,9 @@ namespace FinalDSA.Controllers
                     _manager.EditExpense(editIndex, editedExpense.Category, editedExpense.Amount, editedExpense.Date, editedExpense.Description);
                     break;
                 default:
-                    Console.WriteLine("Lựa chọn không hợp lệ.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nLựa chọn không hợp lệ. Vui lòng thử lại.");
+                    Console.ResetColor();
                     break;
             }
         }
@@ -82,9 +86,12 @@ namespace FinalDSA.Controllers
         private void HandleSortOptions()
         {
             Console.Clear();
-            Console.WriteLine("1. Sắp xếp theo danh mục");
-            Console.WriteLine("2. Sắp xếp theo số tiền");
-            Console.Write("\nChọn chức năng: ");
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+            Console.WriteLine("║ 1 │ Sắp xếp theo danh mục                          ║");
+            Console.WriteLine("║ 2 │ Sắp xếp theo tiền                              ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
             int option = int.Parse(Console.ReadLine());
 
             switch (option)

@@ -9,11 +9,20 @@ namespace FinalDSA.Views
         public void DisplayExpenses(List<Expense> expenses)
         {
             Console.WriteLine("\nDanh sách chi tiêu:");
+            Console.WriteLine("{0,-5} {1,-20} {2,-15} {3,-25} {4,-30}", "STT", "Danh mục", "Số tiền", "Ngày", "Mô tả");
+            Console.WriteLine(new string('-', 110));
+
             for (int i = 0; i < expenses.Count; i++)
             {
-                Console.WriteLine($"{i}. Danh mục: {expenses[i].Category}, Số tiền: {expenses[i].Amount}, Ngày: {expenses[i].Date.ToString("yyyy-MM-dd HH:mm:ss")}, Mô tả: {expenses[i].Description}");
+                Console.WriteLine("{0,-5} {1,-20} {2,-15:F2} {3,-25} {4,-30}",
+                    i + 1,                                  // STT
+                    expenses[i].Category,                   // Danh mục
+                    expenses[i].Amount,                     // Số tiền
+                    expenses[i].Date.ToString("yyyy-MM-dd HH:mm:ss"), // Ngày
+                    expenses[i].Description);               // Mô tả
             }
         }
+
 
         public void DisplayRemainingSpending(double remaining)
         {
@@ -22,39 +31,57 @@ namespace FinalDSA.Views
 
         public void DisplayExpenseTable(List<Expense> expenses)
         {
-            Console.WriteLine("\nBảng danh sách chi tiêu hiện tại:");
-            Console.WriteLine("{0,-15} {1,-10} {2,-25} {3,-30}", "Danh mục", "Số tiền", "Ngày", "Mô tả");
-            Console.WriteLine(new string('-', 70));
+            // In bảng chi tiêu hiện tại trong khung bao quanh
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            Console.WriteLine("║              BẢNG DANH SÁCH CHI TIÊU               ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
 
-            foreach (var expense in expenses)
+            // In tiêu đề bảng
+            Console.WriteLine("╔════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║ {0,-5} {1,-20} {2,-15} {3,-25} {4,-30} ║", "STT", "Danh mục", "Số tiền", "Ngày", "Mô tả");
+            Console.WriteLine("╚════════════════════════════════════════════════════════════════════════╝");
+
+            // Duyệt qua danh sách chi tiêu và in từng mục
+            for (int i = 0; i < expenses.Count; i++)
             {
-                Console.WriteLine("{0,-15} {1,-10} {2,-25} {3,-30}",
-                    expense.Category, expense.Amount, expense.Date.ToString("yyyy-MM-dd HH:mm:ss"), expense.Description);
+                Console.WriteLine("║ {0,-5} {1,-20} {2,-15:F2} {3,-25} {4,-30} ║",
+                    i + 1,                                  // STT
+                    expenses[i].Category,                   // Danh mục
+                    expenses[i].Amount,                     // Số tiền
+                    expenses[i].Date.ToString("yyyy-MM-dd HH:mm:ss"), // Ngày
+                    expenses[i].Description);               // Mô tả
             }
-            Console.WriteLine(new string('-', 70));
+
+            // Kết thúc bảng
+            Console.WriteLine("╚════════════════════════════════════════════════════════════════════════╝");
+
         }
 
         public void DisplayWarning(string message)
         {
-            Console.WriteLine("\nCẢNH BÁO: " + message);
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            Console.WriteLine("║CẢNH BÁO : BẠN ĐÃ VƯỢT QUÁ CHI TIÊU!!!              ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
         }
 
         public void DisplayMenu()
         {
-            Console.WriteLine(new string('*', 50));
-            Console.WriteLine("*\tXIN CHÀO BẠN! CHÀO MỪNG ĐẾN VỚI\t\t *");
-            Console.WriteLine("*\t  CHƯƠNG TRÌNH QUẢN LÝ CHI TIÊU\t\t *");
-            Console.WriteLine(new string('*', 50));
-            Console.WriteLine("\nBạn muốn thực hiện chức năng nào sau đây?");
-            Console.WriteLine(new string('-', 60));
-            Console.WriteLine("| 1 | Thêm, xóa và sửa chi tiêu");
-            Console.WriteLine(new string('-', 60));
-            Console.WriteLine("| 2 | Hiển thị danh sách và sắp xếp chi tiêu theo các mục");
-            Console.WriteLine(new string('-', 60));
-            Console.WriteLine("| 3 | Đánh giá mức độ sử dụng của bạn");
-            Console.WriteLine(new string('-', 60));
-            Console.WriteLine("| 0 | Thoát chương trình");
-            Console.WriteLine(new string('-', 60));
+            // Tiêu đề
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            Console.WriteLine("║          XIN CHÀO BẠN! CHÀO MỪNG ĐẾN VỚI           ║");
+            Console.WriteLine("║           CHƯƠNG TRÌNH QUẢN LÝ CHI TIÊU            ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+
+            // Tùy chọn menu
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+            Console.WriteLine("║ 1 │ Thêm, xóa và sửa chi tiêu                      ║");
+            Console.WriteLine("║ 2 │ Hiển thị và sắp xếp chi tiêu theo các mục      ║");
+            Console.WriteLine("║ 3 │ Đánh giá mức độ sử dụng của bạn                ║");
+            Console.WriteLine("║ 0 │ Thoát chương trình                             ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
         }
 
         public int GetUserChoice()
@@ -65,26 +92,32 @@ namespace FinalDSA.Views
 
         public Expense GetExpenseInput()
         {
-            Console.Write("Nhập danh mục: ");
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            Console.Write(    "║Nhập danh mục: ");
             string category = Console.ReadLine();
-            Console.Write("Nhập số tiền: ");
+            Console.Write(    "║Nhập số tiền: ");
             double amount = double.Parse(Console.ReadLine());
             DateTime date = DateTime.Now;  // Real-time
-            Console.Write("Nhập mô tả: ");
+            Console.Write(    "║Nhập mô tả: ");
             string description = Console.ReadLine();
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
 
             return new Expense(category, amount, date, description);
         }
 
         public int GetExpenseIndex()
         {
-            Console.Write("Nhập chỉ mục chi tiêu: ");
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            Console.WriteLine("║Nhập chỉ mục chi tiêu:                              ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
             return int.Parse(Console.ReadLine());
         }
 
         public double GetSpendingLimit()
         {
-            Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            Console.WriteLine("║Nhập giới hạn chi tiêu của bạn                      ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
             return double.Parse(Console.ReadLine());
         }
     }
