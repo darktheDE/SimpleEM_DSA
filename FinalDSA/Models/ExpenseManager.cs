@@ -175,9 +175,12 @@ namespace FinalDSA.Models
 
             if (remaining < 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red; // Thay đổi màu chữ thành xanh dương
                 Console.WriteLine("╔════════════════════════════════════════════════════╗");
                 Console.WriteLine("║CẢNH BÁO : BẠN ĐÃ VƯỢT QUÁ CHI TIÊU!!!              ║");
                 Console.WriteLine("╚════════════════════════════════════════════════════╝");
+                Console.ResetColor();
+
             }
         }
     }
