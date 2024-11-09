@@ -71,6 +71,7 @@ namespace FinalDSA.Controllers
                         HandleSortOptions();
                         break;
                     case 3:
+                        HandleEvaluateSpending();
                         _manager.EvaluateSpending();
                         break;
                     case 0:
@@ -106,12 +107,12 @@ namespace FinalDSA.Controllers
                     break;
                 case 2:
                     _manager.DisplayExpenses();
-                    int removeIndex = InputInteger("Nhập chỉ mục chi tiêu để xóa: ");
+                    int removeIndex = InputInteger("Nhập chỉ mục chi tiêu để xóa: ") - 1;
                     _manager.RemoveExpense(removeIndex);
                     break;
                 case 3:
                     _manager.DisplayExpenses();
-                    int editIndex = InputInteger("Nhập chỉ mục chi tiêu để sửa: ");
+                    int editIndex = InputInteger("Nhập chỉ mục chi tiêu để sửa: ") - 1;
                     Expense editedExpense = _view.GetExpenseInput();
                     _manager.EditExpense(editIndex, editedExpense.Category, editedExpense.Amount, editedExpense.Date, editedExpense.Description);
                     break;
@@ -150,6 +151,12 @@ namespace FinalDSA.Controllers
                     Console.WriteLine("Lựa chọn không hợp lệ.");
                     break;
             }
+        }
+        private void HandleEvaluateSpending()
+        {
+            Console.Clear();
+            var categoryPercentages = _manager.GetCategoryPercentages();
+            _view.DisplayCategoryPercentagesAsBarChart(categoryPercentages);
         }
     }
 }

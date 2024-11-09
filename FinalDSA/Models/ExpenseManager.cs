@@ -193,5 +193,19 @@ namespace FinalDSA.Models
             }
             
         }
+        public List<(string category, double percentage, double amount)> GetCategoryPercentages()
+        {
+            List<(string category, double percentage, double amount)> result = new List<(string, double, double)>();
+
+            double totalSpent = _expenses.Sum(expense => expense.Amount);
+            foreach (var categoryGroup in _expenses.GroupBy(expense => expense.Category))
+            {
+                double categoryTotal = categoryGroup.Sum(expense => expense.Amount);
+                double percentage = (categoryTotal / totalSpent) * 100;
+                result.Add((categoryGroup.Key, percentage, categoryTotal));
+            }
+
+            return result;
+        }
     }
 }

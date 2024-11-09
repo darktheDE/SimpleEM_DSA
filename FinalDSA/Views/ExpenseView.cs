@@ -184,5 +184,26 @@ namespace FinalDSA.Views
             Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
             return spendingExpends;
         }
+        public void DisplayCategoryPercentagesAsBarChart(List<(string category, double percentage, double amount)> categoryPercentages)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n╔════════════════════════════════════════════════════╗");
+            Console.WriteLine("║           ĐÁNH GIÁ MỨC ĐỘ SỬ DỤNG CHI TIÊU         ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+            Console.ResetColor();
+
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║ {0,-25} {1,-15} {2,-20} {3,-25}      ║", "Danh mục", "Phần trăm (%)", "Số tiền (VND)", "Biểu đồ");
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+            int maxBarLength = 100;
+
+            foreach (var item in categoryPercentages)
+            {
+                int barLength = (int)(item.percentage * maxBarLength / 100);
+
+                Console.WriteLine("║ {0,-25} {1,-15:F2} {2,-20:F2} {3,-30} ║", item.category, item.percentage, item.amount, new string('#', barLength));
+            }
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+        }
     }
 }
