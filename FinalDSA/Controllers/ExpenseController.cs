@@ -60,7 +60,7 @@ namespace FinalDSA.Controllers
             do
             {
                 _view.DisplayMenu();
-                choice = InputInteger("\nNhập lựa chọn của bạn (1-3, hoặc 0 để thoát): ");
+                choice = InputInteger("\nNhập lựa chọn của bạn (1-4, hoặc 0 để thoát): ");
 
                 switch (choice)
                 {
@@ -71,7 +71,11 @@ namespace FinalDSA.Controllers
                         HandleSortOptions();
                         break;
                     case 3:
+                        HandleEvaluateSpending();
                         _manager.EvaluateSpending();
+                        break;
+                    case 4:
+                        HandleResetMonthlyExpenses();
                         break;
                     case 0:
                         Console.WriteLine("\nCảm ơn bạn đã sử dụng chương trình. Tạm biệt!");
@@ -106,12 +110,12 @@ namespace FinalDSA.Controllers
                     break;
                 case 2:
                     _manager.DisplayExpenses();
-                    int removeIndex = InputInteger("Nhập chỉ mục chi tiêu để xóa: ");
+                    int removeIndex = InputInteger("Nhập chỉ mục chi tiêu để xóa: ") - 1;
                     _manager.RemoveExpense(removeIndex);
                     break;
                 case 3:
                     _manager.DisplayExpenses();
-                    int editIndex = InputInteger("Nhập chỉ mục chi tiêu để sửa: ");
+                    int editIndex = InputInteger("Nhập chỉ mục chi tiêu để sửa: ") - 1;
                     Expense editedExpense = _view.GetExpenseInput();
                     _manager.EditExpense(editIndex, editedExpense.Category, editedExpense.Amount, editedExpense.Date, editedExpense.Description);
                     break;
@@ -150,6 +154,18 @@ namespace FinalDSA.Controllers
                     Console.WriteLine("Lựa chọn không hợp lệ.");
                     break;
             }
+        }
+        private void HandleEvaluateSpending()
+        {
+            Console.Clear();
+            var categoryPercentages = _manager.GetCategoryPercentages();
+            _view.DisplayCategoryPercentagesAsBarChart(categoryPercentages);
+        }
+        private void HandleResetMonthlyExpenses()
+        {
+            Console.WriteLine("Làm mới chi tiêu hàng tháng:");
+            double newLimit = _view.GetSpendingLimit();
+            _manager.ResetMonthlyExpenses(newLimit);
         }
     }
 }
