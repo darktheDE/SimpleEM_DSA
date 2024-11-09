@@ -69,22 +69,22 @@ namespace FinalDSA.Views
 
         public void DisplayMenu()
         {
-            // Tiêu đề
             Console.WriteLine("╔════════════════════════════════════════════════════╗");
             Console.WriteLine("║          XIN CHÀO BẠN! CHÀO MỪNG ĐẾN VỚI           ║");
             Console.WriteLine("║           CHƯƠNG TRÌNH QUẢN LÝ CHI TIÊU            ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
 
-            // Tùy chọn menu
             Console.WriteLine("╔════════════════════════════════════════════════════╗");
             Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
             Console.WriteLine("║ 1 │ Thêm, xóa và sửa chi tiêu                      ║");
             Console.WriteLine("║ 2 │ Hiển thị và sắp xếp chi tiêu theo các mục      ║");
             Console.WriteLine("║ 3 │ Đánh giá mức độ sử dụng của bạn                ║");
+            Console.WriteLine("║ 4 │ Làm mới chi tiêu                               ║");
             Console.WriteLine("║ 0 │ Thoát chương trình                             ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
         }
+
 
         public int GetUserChoice()
         {
@@ -172,18 +172,43 @@ namespace FinalDSA.Views
             Console.WriteLine("╔════════════════════════════════════════════════════╗");
             Console.WriteLine("║Nhập giới hạn chi tiêu của bạn                      ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
-            return double.Parse(Console.ReadLine());
-            double spendingExpends = 0;
+            double spendingLimit = 0;
             while (true)
             {
-                Console.Write("Nhập chỉ mục chi tiêu: ");
-                if (double.TryParse(Console.ReadLine(), out spendingExpends))
-                    break;
-                Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
+                try
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
+                    Console.ResetColor();
+
+                    string input = Console.ReadLine();
+                    if (double.TryParse(input, out spendingLimit))
+                    {
+                        if (spendingLimit >= 0)
+                            return spendingLimit;
+                        else
+                            Console.WriteLine("Giới hạn phải là một số dương. Vui lòng nhập lại.");
+                    }
+                    else
+                    {
+                        throw new FormatException("Định dạng không hợp lệ. Vui lòng nhập một số thực.");
+                    }
+                }
+                catch (FormatException ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Lỗi: {ex.Message}");
+                    Console.ResetColor();
+                }
+                catch (Exception ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Đã xảy ra lỗi: {ex.Message}");
+                    Console.ResetColor();
+                }
             }
-            Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
-            return spendingExpends;
         }
+
         public void DisplayCategoryPercentagesAsBarChart(List<(string category, double percentage, double amount)> categoryPercentages)
         {
             Console.ForegroundColor = ConsoleColor.Green;

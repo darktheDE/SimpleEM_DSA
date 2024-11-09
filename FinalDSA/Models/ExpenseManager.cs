@@ -207,5 +207,12 @@ namespace FinalDSA.Models
 
             return result;
         }
+        public void ResetMonthlyExpenses(double newSpendingLimit)
+        {
+            _expenses.Clear();
+            _spendingLimit = newSpendingLimit;
+            Console.WriteLine("Đã làm mới chi tiêu hàng tháng và thiết lập giới hạn mới.");
+        }
+
     }
 }

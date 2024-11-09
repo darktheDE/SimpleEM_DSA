@@ -60,7 +60,7 @@ namespace FinalDSA.Controllers
             do
             {
                 _view.DisplayMenu();
-                choice = InputInteger("\nNhập lựa chọn của bạn (1-3, hoặc 0 để thoát): ");
+                choice = InputInteger("\nNhập lựa chọn của bạn (1-4, hoặc 0 để thoát): ");
 
                 switch (choice)
                 {
@@ -73,6 +73,9 @@ namespace FinalDSA.Controllers
                     case 3:
                         HandleEvaluateSpending();
                         _manager.EvaluateSpending();
+                        break;
+                    case 4:
+                        HandleResetMonthlyExpenses();
                         break;
                     case 0:
                         Console.WriteLine("\nCảm ơn bạn đã sử dụng chương trình. Tạm biệt!");
@@ -157,6 +160,12 @@ namespace FinalDSA.Controllers
             Console.Clear();
             var categoryPercentages = _manager.GetCategoryPercentages();
             _view.DisplayCategoryPercentagesAsBarChart(categoryPercentages);
+        }
+        private void HandleResetMonthlyExpenses()
+        {
+            Console.WriteLine("Làm mới chi tiêu hàng tháng:");
+            double newLimit = _view.GetSpendingLimit();
+            _manager.ResetMonthlyExpenses(newLimit);
         }
     }
 }
