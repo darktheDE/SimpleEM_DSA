@@ -81,6 +81,7 @@ namespace FinalDSA.Views
             Console.WriteLine("║ 2 │ Hiển thị và sắp xếp chi tiêu theo các mục      ║");
             Console.WriteLine("║ 3 │ Đánh giá mức độ sử dụng của bạn                ║");
             Console.WriteLine("║ 4 │ Làm mới chi tiêu                               ║");
+            Console.WriteLine("║ 5 │ Tìm kiếm chi tiêu                              ║");
             Console.WriteLine("║ 0 │ Thoát chương trình                             ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
         }
@@ -155,17 +156,19 @@ namespace FinalDSA.Views
             Console.WriteLine("╔════════════════════════════════════════════════════╗");
             Console.WriteLine("║Nhập chỉ mục chi tiêu:                              ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
-            return int.Parse(Console.ReadLine());
-            int expends = 0;
+
+            int expends;
             while (true)
             {
                 Console.Write("Nhập chỉ mục chi tiêu: ");
                 if (int.TryParse(Console.ReadLine(), out expends))
                     break;
-                Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
+
+                Console.WriteLine("Vui lòng nhập một số nguyên hợp lệ.");
             }
             return expends;
         }
+
 
         public double GetSpendingLimit()
         {

@@ -77,6 +77,9 @@ namespace FinalDSA.Controllers
                     case 4:
                         HandleResetMonthlyExpenses();
                         break;
+                    case 5:
+                        HandleSearchExpenses();
+                        break;
                     case 0:
                         Console.WriteLine("\nCảm ơn bạn đã sử dụng chương trình. Tạm biệt!");
                         break;
@@ -87,6 +90,40 @@ namespace FinalDSA.Controllers
                         break;
                 }
             } while (choice != 0);
+        }
+        private void HandleSearchExpenses()
+        {
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+            Console.WriteLine("║ 1 │ Tìm chi tiêu theo mô tả                        ║");
+            Console.WriteLine("║ 2 │ Tìm chi tiêu theo danh mục                     ║");
+            Console.WriteLine("║ 3 │ Tìm chi tiêu theo thời gian                    ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+
+            int option = InputInteger("\nChọn chức năng: ");
+            switch (option)
+            {
+                case 1:
+                    Console.Write("Nhập danh mục cần tìm: ");
+                    string searchCategory = Console.ReadLine().ToLower(); // Chuyển về chữ thường để tìm kiếm không phân biệt hoa thường
+                    _manager.SearchByCategory(searchCategory);
+                    break;
+                case 2:
+                    Console.Write("Nhập mô tả cần tìm: ");
+                    string searchDescription = Console.ReadLine().ToLower(); // Chuyển về chữ thường để tìm kiếm không phân biệt hoa thường
+                    _manager.SearchByDescription(searchDescription);
+                    break;
+                case 3:
+                    Console.Write("Nhập ngày cần tìm (theo định dạng yyyy-MM-dd): ");
+                    string inputDate = Console.ReadLine();
+                    _manager.SearchByDate(inputDate);
+                    break;
+                default:
+                    Console.WriteLine("Lựa chọn không hợp lệ.");
+                    break;
+            }
         }
 
         private void HandleExpenseOptions()
