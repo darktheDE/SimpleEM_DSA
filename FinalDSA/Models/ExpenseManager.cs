@@ -142,6 +142,75 @@ namespace FinalDSA.Models
             _expenses = _expenses.OrderBy(e => e.Category).ToList();
             DisplayExpenses();
         }
+        // Thuộc tính hoặc trường lưu kết quả tìm kiếm
+        private List<Expense> _searchResults = new List<Expense>();
+
+
+        public void SearchByCategory(string searchCategory)
+        {
+            // Lọc danh sách _expenses và lưu kết quả vào _searchResults
+            _searchResults = _expenses.FindAll(expense => expense.Category.ToLower().Contains(searchCategory));
+
+            if (_searchResults.Count > 0)
+            {
+                Console.WriteLine($"\nKết quả tìm kiếm cho danh mục \"{searchCategory}\":");
+                
+                // Gán _searchResults vào _expenses tạm thời để DisplayExpenses hiển thị kết quả tìm kiếm
+                var originalExpenses = _expenses; // Lưu danh sách gốc
+                _expenses = _searchResults;       // Tạm thời thay đổi _expenses thành kết quả tìm kiếm
+
+                DisplayExpenses();                // Hiển thị kết quả tìm kiếm
+
+                _expenses = originalExpenses;     // Khôi phục danh sách gốc sau khi hiển thị
+            }
+            else
+            {
+                Console.WriteLine($"Không tìm thấy khoản chi tiêu nào trong danh mục \"{searchCategory}\".");
+            }
+        }
+        public void SearchByDescription(string searchDescription)
+        {
+            // Lọc danh sách _expenses dựa trên mô tả đã truyền vào và lưu kết quả vào _searchResults
+            _searchResults = _expenses.FindAll(expense => expense.Description.ToLower().Contains(searchDescription.ToLower()));
+
+            if (_searchResults.Count > 0)
+            {
+                Console.WriteLine($"\nKết quả tìm kiếm cho mô tả \"{searchDescription}\":");
+
+                // Tạm thời gán _searchResults vào _expenses để DisplayExpenses hiển thị kết quả tìm kiếm
+                var originalExpenses = _expenses; // Lưu danh sách gốc
+                _expenses = _searchResults;       // Tạm thời thay đổi _expenses thành kết quả tìm kiếm
+
+                DisplayExpenses();                // Hiển thị kết quả tìm kiếm
+
+                _expenses = originalExpenses;     // Khôi phục danh sách gốc sau khi hiển thị
+            }
+            else
+            {
+                Console.WriteLine($"Không tìm thấy khoản chi tiêu nào với mô tả \"{searchDescription}\".");
+            }
+        }
+        public void SearchByDate(string inputDate)
+        {
+            if (DateTime.TryParse(inputDate, out DateTime searchDate))
+            {
+                // Lọc danh sách chi tiêu dựa trên ngày nhập vào
+                var filteredExpenses = _expenses.FindAll(expense => expense.Date.Date == searchDate.Date);
+
+                // Cập nhật _expenses để hiển thị kết quả tìm kiếm
+                _expenses = filteredExpenses;
+
+                // Hiển thị kết quả tìm kiếm
+                DisplayExpenses();
+            }
+            else
+            {
+                Console.WriteLine("Định dạng ngày không hợp lệ. Vui lòng thử lại.");
+            }
+        }
+
+
+
 
         public void SortByAmount()
         {
@@ -156,6 +225,7 @@ namespace FinalDSA.Models
             Console.WriteLine("\nDanh sách đã được sắp xếp theo ngày.");
             DisplayExpenses();
         }
+        
 
         public void EvaluateSpending()
         {
