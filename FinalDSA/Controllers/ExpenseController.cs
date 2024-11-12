@@ -103,106 +103,148 @@ namespace FinalDSA.Controllers
 
         private void HandleSearchExpenses()
         {
-            Console.Clear();
-            Console.WriteLine("╔════════════════════════════════════════════════════╗");
-            Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
-            Console.WriteLine("╚════════════════════════════════════════════════════╝");
-            Console.WriteLine("║ 1 │ Tìm chi tiêu theo mô tả                        ║");
-            Console.WriteLine("║ 2 │ Tìm chi tiêu theo danh mục                     ║");
-            Console.WriteLine("║ 3 │ Tìm chi tiêu theo thời gian                    ║");
-            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+            Boolean endHandle = false;
+            while (!endHandle) {
+                Console.Clear();
+                Console.WriteLine("╔════════════════════════════════════════════════════╗");
+                Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
+                Console.WriteLine("╚════════════════════════════════════════════════════╝");
+                Console.WriteLine("║ 1 │ Tìm chi tiêu theo mô tả                        ║");
+                Console.WriteLine("║ 2 │ Tìm chi tiêu theo danh mục                     ║");
+                Console.WriteLine("║ 3 │ Tìm chi tiêu theo thời gian                    ║");
+                Console.WriteLine("║ 4 │ Thoát ra menu chính                            ║");
+                Console.WriteLine("║ 0 │ Đóng ứng dụng                                  ║");
+                Console.WriteLine("╚════════════════════════════════════════════════════╝");
 
-            int option = InputInteger("\nChọn chức năng: ");
-            switch (option)
-            {
-                case 1:
-                    Console.Write("Nhập danh mục cần tìm: ");
-                    string? searchCategory = Console.ReadLine()?.ToLower();
-                    if (searchCategory != null)
+                int option = InputInteger("\nChọn chức năng: ");
+                switch (option)
+                {
+                    case 1:
+                        Console.Write("Nhập danh mục cần tìm: ");
+                        string searchCategory = Console.ReadLine().ToLower(); // Chuyển về chữ thường để tìm kiếm không phân biệt hoa thường
                         _manager.SearchByCategory(searchCategory);
-                    break;
-                case 2:
-                    Console.Write("Nhập mô tả cần tìm: ");
-                    string? searchDescription = Console.ReadLine()?.ToLower();
-                    if (searchDescription != null)
+                        break;
+                    case 2:
+                        Console.Write("Nhập mô tả cần tìm: ");
+                        string searchDescription = Console.ReadLine().ToLower(); // Chuyển về chữ thường để tìm kiếm không phân biệt hoa thường
                         _manager.SearchByDescription(searchDescription);
-                    break;
-                case 3:
-                    Console.Write("Nhập ngày cần tìm (theo định dạng yyyy-MM-dd): ");
-                    string? inputDate = Console.ReadLine();
-                    if (inputDate != null)
+                        break;
+                    case 3:
+                        Console.Write("Nhập ngày cần tìm (theo định dạng yyyy-MM-dd): ");
+                        string inputDate = Console.ReadLine();
                         _manager.SearchByDate(inputDate);
-                    break;
-                default:
-                    Console.WriteLine("Lựa chọn không hợp lệ.");
-                    break;
+                        break;
+                    case 4:
+                        endHandle = true;
+                        break;
+                    case 0:
+                        Console.WriteLine("\nCảm ơn bạn đã sử dụng chương trình. Tạm biệt!");
+                        Environment.Exit(0); // Đóng chương trình
+                        break;
+                    default:
+                        endHandle = true;
+                        Console.WriteLine("Lựa chọn không hợp lệ.");
+                        break;
+                }
+                Console.Write("Nhấn nút bất kì để tiếp tục: ");
+                Console.ReadKey();
             }
         }
 
         private void HandleExpenseOptions()
         {
-            Console.Clear();
-            Console.WriteLine("╔════════════════════════════════════════════════════╗");
-            Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
-            Console.WriteLine("╚════════════════════════════════════════════════════╝");
-            Console.WriteLine("║ 1 │ Thêm chi tiêu                                  ║");
-            Console.WriteLine("║ 2 │ Xóa chi tiêu                                   ║");
-            Console.WriteLine("║ 3 │ Chỉnh sửa chi tiêu                             ║");
-            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+            Boolean endHandle =false;
+            while (!endHandle) {
+                Console.Clear();
+                Console.WriteLine("╔════════════════════════════════════════════════════╗");
+                Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
+                Console.WriteLine("╚════════════════════════════════════════════════════╝");
+                Console.WriteLine("║ 1 │ Thêm chi tiêu                                  ║");
+                Console.WriteLine("║ 2 │ Xóa chi tiêu                                   ║");
+                Console.WriteLine("║ 3 │ Chỉnh sửa chi tiêu                             ║");
+                Console.WriteLine("║ 4 │ Thoát ra menu chính                            ║");
+                Console.WriteLine("║ 0 │ Đóng ứng dụng                                  ║");
+                Console.WriteLine("╚════════════════════════════════════════════════════╝");
 
-            int option = InputInteger("\nChọn chức năng: ");
+                int option = InputInteger("\nChọn chức năng: ");
 
-            switch (option)
-            {
-                case 1:
-                    Expense newExpense = _view.GetExpenseInput();
-                    _manager.AddExpense(newExpense.Category, newExpense.Amount, newExpense.Date, newExpense.Description);
-                    break;
-                case 2:
-                    _manager.DisplayExpenses();
-                    int removeIndex = InputInteger("Nhập chỉ mục chi tiêu để xóa: ") - 1;
-                    _manager.RemoveExpense(removeIndex);
-                    break;
-                case 3:
-                    _manager.DisplayExpenses();
-                    int editIndex = InputInteger("Nhập chỉ mục chi tiêu để sửa: ") - 1;
-                    Expense editedExpense = _view.GetExpenseInput();
-                    _manager.EditExpense(editIndex, editedExpense.Category, editedExpense.Amount, editedExpense.Date, editedExpense.Description);
-                    break;
-                default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nLựa chọn không hợp lệ. Vui lòng thử lại.");
-                    Console.ResetColor();
-                    break;
+                switch (option)
+                {
+                    case 1:
+                        Expense newExpense = _view.GetExpenseInput();
+                        _manager.AddExpense(newExpense.Category, newExpense.Amount, newExpense.Date, newExpense.Description);
+                        break;
+                    case 2:
+                        _manager.DisplayExpenses();
+                        int removeIndex = InputInteger("Nhập chỉ mục chi tiêu để xóa: ") - 1;
+                        _manager.RemoveExpense(removeIndex);
+                        break;
+                    case 3:
+                        _manager.DisplayExpenses();
+                        int editIndex = InputInteger("Nhập chỉ mục chi tiêu để sửa: ") - 1;
+                        Expense editedExpense = _view.GetExpenseInput();
+                        _manager.EditExpense(editIndex, editedExpense.Category, editedExpense.Amount, editedExpense.Date, editedExpense.Description);
+                        break;
+                    case 4:
+                        endHandle = true;
+                        break;
+                    case 0:
+                        Console.WriteLine("\nCảm ơn bạn đã sử dụng chương trình. Tạm biệt!");
+                        Environment.Exit(0); // Đóng chương trình
+                        break;
+                    default:
+                        endHandle = true;
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nLựa chọn không hợp lệ. Vui lòng thử lại.");
+                        Console.ResetColor();
+                        break;
+                }
+                Console.Write("Nhấn nút bất kì để tiếp tục: ");
+                Console.ReadKey();
             }
         }
 
         private void HandleSortOptions()
         {
-            Console.Clear();
-            Console.WriteLine("╔════════════════════════════════════════════════════╗");
-            Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
-            Console.WriteLine("╚════════════════════════════════════════════════════╝");
-            Console.WriteLine("║ 1 │ Sắp xếp theo danh mục                          ║");
-            Console.WriteLine("║ 2 │ Sắp xếp theo tiền                              ║");
-            Console.WriteLine("║ 3 │ Sắp xếp theo thời gian                         ║");
-            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+            Boolean endHandle = false;
+            while (!endHandle) {
+                Console.Clear();
+                Console.WriteLine("╔════════════════════════════════════════════════════╗");
+                Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
+                Console.WriteLine("╚════════════════════════════════════════════════════╝");
+                Console.WriteLine("║ 1 │ Sắp xếp theo danh mục                          ║");
+                Console.WriteLine("║ 2 │ Sắp xếp theo tiền                              ║");
+                Console.WriteLine("║ 3 │ Sắp xếp theo thời gian                         ║");
+                Console.WriteLine("║ 4 │ Thoát ra menu chính                            ║");
+                Console.WriteLine("║ 0 │ Đóng ứng dụng                                  ║");
+                Console.WriteLine("╚════════════════════════════════════════════════════╝");
 
-            int option = InputInteger("\nChọn chức năng: ");
-            switch (option)
-            {
-                case 1:
-                    _manager.SortByCategory();
-                    break;
-                case 2:
-                    _manager.SortByAmount();
-                    break;
-                case 3:
-                    _manager.SortByDate();
-                    break;
-                default:
-                    Console.WriteLine("Lựa chọn không hợp lệ.");
-                    break;
+                int option = InputInteger("\nChọn chức năng: ");
+                switch (option)
+                {
+                    case 1:
+                        _manager.SortByCategory();
+                        break;
+                    case 2:
+                        _manager.SortByAmount();
+                        break;
+                    case 3:
+                        _manager.SortByDate();
+                        break;
+                    case 4:
+                        endHandle = true;
+                        break;
+                    case 0:
+                        Console.WriteLine("\nCảm ơn bạn đã sử dụng chương trình. Tạm biệt!");
+                        Environment.Exit(0); // Đóng chương trình
+                        break;
+                    default:
+                        endHandle = true;
+                        Console.WriteLine("Lựa chọn không hợp lệ.");
+                        break;
+                }
+                Console.Write("Nhấn nút bất kì để tiếp tục: ");
+                Console.ReadKey();
             }
         }
 
