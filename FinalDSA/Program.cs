@@ -41,6 +41,8 @@ namespace ExpenseTracker
             {
                 // Nếu tệp không tồn tại hoặc trống, yêu cầu người dùng nhập và ghi vào tệp
                 spendingLimit = GetSpendingLimit();
+                // Đặt lại màu về mặc định
+                Console.ResetColor();
                 File.WriteAllText(filePath, spendingLimit.ToString());
             }
             ExpenseManager expenseManager = new ExpenseManager(spendingLimit);
@@ -62,22 +64,26 @@ namespace ExpenseTracker
                     {
                         Console.ForegroundColor = ConsoleColor.Blue; // Thay đổi màu chữ thành xanh dương
                         Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
-                         // Đặt lại màu về mặc định
-                        Console.ResetColor();
                         if (double.TryParse(Console.ReadLine(), out limit))
                             break;
+                        Console.ForegroundColor = ConsoleColor.Red; // Thay đổi màu chữ thành đỏ
                         Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
                     }
                     if (limit >= 0)
                         return limit;
                     else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Giới hạn phải là số dương. Vui lòng nhập lại: ");
+                    }           
                 }
                 catch
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Vui lòng nhập một số hợp lệ: ");
-                }
+                } 
             }
+
         }
     }
 }

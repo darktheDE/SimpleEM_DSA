@@ -22,8 +22,11 @@ namespace FinalDSA.Controllers
             while (true)
             {
                 Console.Write(prompt);
-                if (int.TryParse(Console.ReadLine(), out value))
+                string? input = Console.ReadLine();
+
+                if (!string.IsNullOrEmpty(input) && int.TryParse(input, out value))
                     return value;
+
                 Console.WriteLine("Vui lòng nhập một số nguyên hợp lệ.");
             }
         }
@@ -35,8 +38,11 @@ namespace FinalDSA.Controllers
             while (true)
             {
                 Console.Write(prompt);
-                if (double.TryParse(Console.ReadLine(), out value))
+                string? input = Console.ReadLine();
+
+                if (!string.IsNullOrEmpty(input) && double.TryParse(input, out value))
                     return value;
+
                 Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
             }
         }
@@ -48,8 +54,11 @@ namespace FinalDSA.Controllers
             while (true)
             {
                 Console.Write(prompt);
-                if (float.TryParse(Console.ReadLine(), out value))
+                string? input = Console.ReadLine();
+
+                if (!string.IsNullOrEmpty(input) && float.TryParse(input, out value))
                     return value;
+
                 Console.WriteLine("Vui lòng nhập một số thực (float) hợp lệ.");
             }
         }
@@ -91,6 +100,7 @@ namespace FinalDSA.Controllers
                 }
             } while (choice != 0);
         }
+
         private void HandleSearchExpenses()
         {
             Boolean endHandle = false;
@@ -237,12 +247,14 @@ namespace FinalDSA.Controllers
                 Console.ReadKey();
             }
         }
+
         private void HandleEvaluateSpending()
         {
             Console.Clear();
             var categoryPercentages = _manager.GetCategoryPercentages();
             _view.DisplayCategoryPercentagesAsBarChart(categoryPercentages);
         }
+
         private void HandleResetMonthlyExpenses()
         {
             Console.WriteLine("Làm mới chi tiêu hàng tháng:");
