@@ -16,6 +16,7 @@ namespace ExpenseTracker
         static void RunProgram()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("╔════════════════════════════════════════════════════╗");
             Console.WriteLine("║             QUẢN LÝ CHI TIÊU CÁ NHÂN               ║");
             Console.WriteLine("╠════════════════════════════════════════════════════╣");
@@ -24,7 +25,7 @@ namespace ExpenseTracker
             Console.WriteLine("║ 23133030: Đỗ Kiến Hưng                             ║");
             Console.WriteLine("║ 23110086: Nguyễn Văn Quang Duy                     ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
-
+            Console.ResetColor();
 
             // Yêu cầu người dùng nhập giới hạn chi tiêu
             double spendingLimit;
