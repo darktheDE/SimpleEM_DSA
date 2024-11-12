@@ -25,7 +25,6 @@ namespace FinalDSA.Views
             }
         }
 
-
         public void DisplayRemainingSpending(double remaining)
         {
             Console.WriteLine($"\nSố tiền còn lại trong giới hạn chi tiêu: {remaining}");
@@ -86,70 +85,153 @@ namespace FinalDSA.Views
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
         }
 
-
         public int GetUserChoice()
         {
-            Console.Write("\nNhập lựa chọn của bạn (1-3, hoặc 0 để thoát): ");
-            return int.Parse(Console.ReadLine());
+            while (true)
+            {
+                Console.Write("\nNhập lựa chọn của bạn (1-3, hoặc 0 để thoát): ");
+                string? input = Console.ReadLine(); // Sử dụng kiểu nullable string
+
+                if (input != null && int.TryParse(input, out int choice))
+                {
+                    return choice; // Trả về nếu người dùng nhập hợp lệ
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Lựa chọn không hợp lệ. Vui lòng nhập lại."); // Thông báo nếu nhập sai
+                    // Đặt lại màu về mặc định
+                    Console.ResetColor();
+                }
+            }
         }
+
 
         public Expense GetExpenseInput()
         {
             Console.OutputEncoding = Encoding.UTF8;
             Console.InputEncoding = Encoding.UTF8;
-            
+
             Console.WriteLine("╔════════════════════════════════════════════════════╗");
+
+            // Nhập danh mục và kiểm tra giá trị null
             Console.Write("║Nhập danh mục: ");
-            string category = Console.ReadLine();
-            
-            Console.Write("║Nhập số tiền: ");
-            double amount = double.Parse(Console.ReadLine());
-
-            DateTime date = DateTime.Now;  // Khởi tạo mặc định với thời gian thực
-            Console.Write("Chọn 1(thời gian thực), 2(tự nhập): ");
-            
-            int option;
-            if (int.TryParse(Console.ReadLine(), out option))
+            string? category = Console.ReadLine() ?? "Không xác định";
+            double amount;
+            while (true)
             {
-                switch (option)
+                // Nhập số tiền và xử lý ngoại lệ khi người dùng nhập sai
+                Console.Write("║Nhập số tiền: ");
+                string? amountInput = Console.ReadLine();
+                if (amountInput != null && double.TryParse(amountInput, out amount) && amount > 0)
                 {
-                    case 1:
-                        date = DateTime.Now;  // Thời gian thực
-                        break;
-                    case 2:
-                        Console.Write("Nhập ngày (theo định dạng yyyy-MM-dd): ");
-                        string inputDate = Console.ReadLine();
-
-                        Console.Write("Nhập giờ (theo định dạng HH:mm:ss): ");
-                        string inputTime = Console.ReadLine();
-
-                        // Ghép chuỗi ngày và giờ lại với nhau
-                        string inputDateTime = inputDate + " " + inputTime;
-
-                        // Cố gắng chuyển đổi chuỗi nhập thành kiểu DateTime
-                        if (!DateTime.TryParse(inputDateTime, out date))
-                        {
-                            Console.WriteLine("Định dạng ngày giờ không hợp lệ. Sử dụng thời gian thực thay thế.");
-                            date = DateTime.Now;
-                        }
-                        break;
-                    default:
-                        Console.WriteLine("Lựa chọn không hợp lệ. Sử dụng thời gian thực thay thế.");
-                        date = DateTime.Now;
-                        break;
+                    break; // Thoát vòng lặp khi nhập hợp lệ
+                }
+                else
+                {
+                    Console.WriteLine("Số tiền không hợp lệ. Vui lòng nhập lại.");
                 }
             }
-            else
+
+            // Kiểm tra lựa chọn của người dùng
+            DateTime date = DateTime.Now;
+            while (true)
             {
-                Console.WriteLine("Lựa chọn không hợp lệ. Sử dụng thời gian thực thay thế.");
+                Console.Write("Chọn 1(thời gian thực), 2(tự nhập): ");
+
+                if (int.TryParse(Console.ReadLine(), out int option))
+                {
+                    switch (option)
+                    {
+                        case 1:
+                            date = DateTime.Now; // Thời gian thực
+                            Console.WriteLine($"Thời gian hiện tại: {date}");
+                            break; // Thoát khỏi vòng lặp
+                        case 2:
+                            // Xử lý khi người dùng muốn nhập ngày và giờ thủ công
+                            while (true)
+                            {
+                                Console.Write("Nhập ngày (theo định dạng yyyy-MM-dd): ");
+                                string? inputDate = Console.ReadLine();
+
+                                // Kiểm tra nếu người dùng không nhập gì
+                                if (string.IsNullOrWhiteSpace(inputDate))
+                                {
+                                    Console.WriteLine("Ngày không thể bỏ trống. Vui lòng nhập lại.");
+                                    continue;
+                                }
+
+                                // Kiểm tra định dạng ngày
+                                if (!DateTime.TryParseExact(inputDate, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
+                                {
+                                    Console.WriteLine("Định dạng ngày không hợp lệ. Vui lòng nhập lại theo định dạng yyyy-MM-dd.");
+                                    continue;
+                                }
+
+                                // Kiểm tra tính hợp lệ của ngày (ngày không thể là tương lai)
+                                if (parsedDate > DateTime.Now)
+                                {
+                                    Console.WriteLine("Ngày không thể là ngày trong tương lai. Vui lòng nhập lại.");
+                                    continue;
+                                }
+
+                                // Nhập giờ
+                                while (true)
+                                {
+                                    Console.Write("Nhập giờ (theo định dạng HH:mm:ss): ");
+                                    string? inputTime = Console.ReadLine();
+
+                                    // Kiểm tra nếu người dùng không nhập gì
+                                    if (string.IsNullOrWhiteSpace(inputTime))
+                                    {
+                                        Console.WriteLine("Giờ không thể bỏ trống. Vui lòng nhập lại.");
+                                        continue;
+                                    }
+
+                                    // Kiểm tra định dạng giờ
+                                    if (!TimeSpan.TryParseExact(inputTime, @"hh\:mm\:ss", null, out TimeSpan parsedTime))
+                                    {
+                                        Console.WriteLine("Định dạng giờ không hợp lệ. Vui lòng nhập lại theo định dạng HH:mm:ss.");
+                                        continue;
+                                    }
+
+                                    // Kiểm tra nếu giờ là 24:00:00, vì TimeSpan không cho phép giá trị này
+                                    if (parsedTime.Hours == 24 && parsedTime.Minutes == 0 && parsedTime.Seconds == 0)
+                                    {
+                                        Console.WriteLine("Giờ không hợp lệ (không thể là 24:00:00). Vui lòng nhập lại.");
+                                        continue;
+                                    }
+
+                                    // Ghép ngày và giờ lại với nhau để tạo thành DateTime đầy đủ
+                                    date = parsedDate.Add(parsedTime);
+                                    Console.WriteLine($"Ngày và giờ đã nhập: {date}");
+                                    break; // Thoát khỏi vòng lặp
+                                }
+
+                                break; // Thoát khỏi vòng lặp nhập ngày giờ thủ công
+                            }
+                            break;
+                        default:
+                            Console.WriteLine("Lựa chọn không hợp lệ. Vui lòng chọn lại.");
+                            continue;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Lựa chọn không hợp lệ. Vui lòng chọn lại.");
+                }
+                break;
             }
 
+            // Nhập mô tả và kiểm tra giá trị null
             Console.Write("║Nhập mô tả: ");
-            string description = Console.ReadLine();
+            string? description = Console.ReadLine() ?? "Không có mô tả";
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
 
             return new Expense(category, amount, date, description);
         }
+
+
 
         public int GetExpenseIndex()
         {
@@ -175,38 +257,35 @@ namespace FinalDSA.Views
             Console.WriteLine("╔════════════════════════════════════════════════════╗");
             Console.WriteLine("║Nhập giới hạn chi tiêu của bạn                      ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
+
             double spendingLimit = 0;
+
             while (true)
             {
-                try
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
-                    Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("\nNhập giới hạn chi tiêu hàng tháng của bạn: ");
+                Console.ResetColor();
 
-                    string input = Console.ReadLine();
-                    if (double.TryParse(input, out spendingLimit))
+                string? input = Console.ReadLine();
+
+                // Kiểm tra null và parse double từ input
+                if (!string.IsNullOrEmpty(input) && double.TryParse(input, out spendingLimit))
+                {
+                    if (spendingLimit >= 0)
                     {
-                        if (spendingLimit >= 0)
-                            return spendingLimit;
-                        else
-                            Console.WriteLine("Giới hạn phải là một số dương. Vui lòng nhập lại.");
+                        return spendingLimit; // Trả về giá trị nếu hợp lệ
                     }
                     else
                     {
-                        throw new FormatException("Định dạng không hợp lệ. Vui lòng nhập một số thực.");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Giới hạn phải là một số dương. Vui lòng nhập lại.");
+                        Console.ResetColor();
                     }
                 }
-                catch (FormatException ex)
+                else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Lỗi: {ex.Message}");
-                    Console.ResetColor();
-                }
-                catch (Exception ex)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Đã xảy ra lỗi: {ex.Message}");
+                    Console.WriteLine("Định dạng không hợp lệ. Vui lòng nhập một số thực.");
                     Console.ResetColor();
                 }
             }
