@@ -22,8 +22,11 @@ namespace FinalDSA.Controllers
             while (true)
             {
                 Console.Write(prompt);
-                if (int.TryParse(Console.ReadLine(), out value))
+                string? input = Console.ReadLine();
+
+                if (!string.IsNullOrEmpty(input) && int.TryParse(input, out value))
                     return value;
+
                 Console.WriteLine("Vui lòng nhập một số nguyên hợp lệ.");
             }
         }
@@ -35,8 +38,11 @@ namespace FinalDSA.Controllers
             while (true)
             {
                 Console.Write(prompt);
-                if (double.TryParse(Console.ReadLine(), out value))
+                string? input = Console.ReadLine();
+
+                if (!string.IsNullOrEmpty(input) && double.TryParse(input, out value))
                     return value;
+
                 Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
             }
         }
@@ -48,8 +54,11 @@ namespace FinalDSA.Controllers
             while (true)
             {
                 Console.Write(prompt);
-                if (float.TryParse(Console.ReadLine(), out value))
+                string? input = Console.ReadLine();
+
+                if (!string.IsNullOrEmpty(input) && float.TryParse(input, out value))
                     return value;
+
                 Console.WriteLine("Vui lòng nhập một số thực (float) hợp lệ.");
             }
         }
@@ -91,6 +100,7 @@ namespace FinalDSA.Controllers
                 }
             } while (choice != 0);
         }
+
         private void HandleSearchExpenses()
         {
             Console.Clear();
@@ -107,18 +117,21 @@ namespace FinalDSA.Controllers
             {
                 case 1:
                     Console.Write("Nhập danh mục cần tìm: ");
-                    string searchCategory = Console.ReadLine().ToLower(); // Chuyển về chữ thường để tìm kiếm không phân biệt hoa thường
-                    _manager.SearchByCategory(searchCategory);
+                    string? searchCategory = Console.ReadLine()?.ToLower();
+                    if (searchCategory != null)
+                        _manager.SearchByCategory(searchCategory);
                     break;
                 case 2:
                     Console.Write("Nhập mô tả cần tìm: ");
-                    string searchDescription = Console.ReadLine().ToLower(); // Chuyển về chữ thường để tìm kiếm không phân biệt hoa thường
-                    _manager.SearchByDescription(searchDescription);
+                    string? searchDescription = Console.ReadLine()?.ToLower();
+                    if (searchDescription != null)
+                        _manager.SearchByDescription(searchDescription);
                     break;
                 case 3:
                     Console.Write("Nhập ngày cần tìm (theo định dạng yyyy-MM-dd): ");
-                    string inputDate = Console.ReadLine();
-                    _manager.SearchByDate(inputDate);
+                    string? inputDate = Console.ReadLine();
+                    if (inputDate != null)
+                        _manager.SearchByDate(inputDate);
                     break;
                 default:
                     Console.WriteLine("Lựa chọn không hợp lệ.");
@@ -192,12 +205,14 @@ namespace FinalDSA.Controllers
                     break;
             }
         }
+
         private void HandleEvaluateSpending()
         {
             Console.Clear();
             var categoryPercentages = _manager.GetCategoryPercentages();
             _view.DisplayCategoryPercentagesAsBarChart(categoryPercentages);
         }
+
         private void HandleResetMonthlyExpenses()
         {
             Console.WriteLine("Làm mới chi tiêu hàng tháng:");
