@@ -14,8 +14,15 @@ namespace FinalDSA.Controllers
             _manager = manager;
             _view = view;
         }
+        /// <summary>
+        /// Hiển thị lời nhắc để người dùng nhập một giá trị số nguyên và kiểm tra tính hợp lệ của đầu vào cho đến khi người dùng nhập một số nguyên hợp lệ.
+        /// </summary>
+        /// <param name="prompt">Thông báo hiển thị để yêu cầu người dùng nhập dữ liệu.</param>
+        /// <returns>Giá trị số nguyên mà người dùng đã nhập.</returns>
+        /// <remarks>
+        /// Nếu đầu vào là null, rỗng, hoặc không phải là số nguyên hợp lệ, sẽ hiển thị thông báo lỗi và yêu cầu người dùng nhập lại cho đến khi có đầu vào hợp lệ.
+        /// </remarks>
 
-        // Phương thức an toàn để nhập số nguyên
         private int InputInteger(string prompt)
         {
             int value;
@@ -30,38 +37,15 @@ namespace FinalDSA.Controllers
                 Console.WriteLine("Vui lòng nhập một số nguyên hợp lệ.");
             }
         }
-
-        // Phương thức an toàn để nhập số thực
-        private double InputDouble(string prompt)
-        {
-            double value;
-            while (true)
-            {
-                Console.Write(prompt);
-                string? input = Console.ReadLine();
-
-                if (!string.IsNullOrEmpty(input) && double.TryParse(input, out value))
-                    return value;
-
-                Console.WriteLine("Vui lòng nhập một số thực hợp lệ.");
-            }
-        }
-
-        // Phương thức an toàn để nhập số thực (float)
-        private float InputFloat(string prompt)
-        {
-            float value;
-            while (true)
-            {
-                Console.Write(prompt);
-                string? input = Console.ReadLine();
-
-                if (!string.IsNullOrEmpty(input) && float.TryParse(input, out value))
-                    return value;
-
-                Console.WriteLine("Vui lòng nhập một số thực (float) hợp lệ.");
-            }
-        }
+        /// <summary>
+        /// Chạy vòng lặp chính của chương trình, hiển thị menu chính và xử lý các lựa chọn của người dùng.
+        /// </summary>
+        /// <remarks>
+        /// Vòng lặp chính này tiếp tục chạy cho đến khi người dùng chọn thoát chương trình (lựa chọn 0).
+        /// Người dùng có thể chọn các tùy chọn để quản lý chi tiêu, sắp xếp, đánh giá chi tiêu, 
+        /// đặt lại giới hạn chi tiêu hàng tháng hoặc tìm kiếm chi tiêu.
+        /// Nếu lựa chọn không hợp lệ, một thông báo lỗi sẽ được hiển thị.
+        /// </remarks>
 
         public void Run()
         {
@@ -100,6 +84,14 @@ namespace FinalDSA.Controllers
                 }
             } while (choice != 0);
         }
+        /// <summary>
+        /// Xử lý chức năng tìm kiếm các chi tiêu theo tiêu chí do người dùng lựa chọn.
+        /// </summary>
+        /// <remarks>
+        /// Hiển thị menu các chức năng tìm kiếm chi tiêu, cho phép người dùng chọn:
+        /// tìm theo mô tả, theo danh mục, hoặc theo ngày tháng.
+        /// Người dùng cũng có thể quay lại menu chính hoặc thoát ứng dụng.
+        /// </remarks>
 
         private void HandleSearchExpenses()
         {
@@ -150,6 +142,16 @@ namespace FinalDSA.Controllers
                 Console.ReadKey();
             }
         }
+        /// <summary>
+        /// Xử lý các tùy chọn quản lý chi tiêu do người dùng chọn, bao gồm thêm, xóa, và chỉnh sửa chi tiêu.
+        /// </summary>
+        /// <remarks>
+        /// Hiển thị menu các tùy chọn quản lý chi tiêu, cho phép người dùng chọn:
+        /// - Thêm một chi tiêu mới
+        /// - Xóa một chi tiêu theo chỉ mục
+        /// - Chỉnh sửa thông tin chi tiêu theo chỉ mục
+        /// Người dùng cũng có thể quay lại menu chính hoặc thoát ứng dụng.
+        /// </remarks>
 
         private void HandleExpenseOptions()
         {
@@ -203,6 +205,16 @@ namespace FinalDSA.Controllers
                 Console.ReadKey();
             }
         }
+        /// <summary>
+        /// Xử lý các tùy chọn sắp xếp chi tiêu do người dùng chọn, bao gồm sắp xếp theo danh mục, số tiền, hoặc thời gian.
+        /// </summary>
+        /// <remarks>
+        /// Hiển thị menu các tùy chọn sắp xếp chi tiêu, cho phép người dùng chọn:
+        /// - Sắp xếp chi tiêu theo danh mục
+        /// - Sắp xếp chi tiêu theo số tiền
+        /// - Sắp xếp chi tiêu theo thời gian
+        /// Người dùng cũng có thể quay lại menu chính hoặc thoát ứng dụng.
+        /// </remarks>
 
         private void HandleSortOptions()
         {
@@ -247,6 +259,13 @@ namespace FinalDSA.Controllers
                 Console.ReadKey();
             }
         }
+        /// <summary>
+        /// Đánh giá chi tiêu của người dùng bằng cách tính phần trăm chi tiêu theo từng danh mục và hiển thị biểu đồ cột.
+        /// </summary>
+        /// <remarks>
+        /// Phương thức này làm mới giao diện, lấy phần trăm chi tiêu theo từng danh mục từ _manager,
+        /// sau đó sử dụng _view để hiển thị kết quả dưới dạng biểu đồ cột.
+        /// </remarks>
 
         private void HandleEvaluateSpending()
         {
@@ -254,6 +273,13 @@ namespace FinalDSA.Controllers
             var categoryPercentages = _manager.GetCategoryPercentages();
             _view.DisplayCategoryPercentagesAsBarChart(categoryPercentages);
         }
+        /// <summary>
+        /// Đặt lại giới hạn chi tiêu hàng tháng của người dùng với giá trị mới.
+        /// </summary>
+        /// <remarks>
+        /// Hiển thị thông báo làm mới chi tiêu hàng tháng, lấy giới hạn chi tiêu mới từ _view, 
+        /// và sử dụng _manager để cập nhật giới hạn chi tiêu hàng tháng.
+        /// </remarks>
 
         private void HandleResetMonthlyExpenses()
         {
