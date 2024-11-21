@@ -3,16 +3,25 @@ using System.IO;
 using FinalDSA.Controllers;
 using FinalDSA.Models;
 using FinalDSA.Views;
-
+/// <summary>
+/// Chương trình quản lý chi tiêu cá nhân.
+/// </summary>
 namespace ExpenseTracker
 {
     class Program
     {
+        /// <summary>
+        /// Điểm bắt đầu của chương trình.
+        /// </summary>
+        /// <param name="args">Tham số dòng lệnh (không sử dụng).</param>
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8; // Đảm bảo hiển thị tiếng Việt tốt
             RunProgram();
         }
+        /// <summary>
+        /// Chạy chương trình chính, hiển thị thông tin và xử lý logic quản lý chi tiêu.
+        /// </summary>
         static void RunProgram()
         {
             Console.Clear();
@@ -52,7 +61,10 @@ namespace ExpenseTracker
             // Chạy vòng lặp chương trình
             expenseController.Run();
         }
-
+        /// <summary>
+        /// Nhập giới hạn chi tiêu từ người dùng.
+        /// </summary>
+        /// <returns>Giới hạn chi tiêu dưới dạng số thực dương.</returns>
         static double GetSpendingLimit()
         {
             while (true)

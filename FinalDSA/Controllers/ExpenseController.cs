@@ -1,6 +1,8 @@
 ﻿using System;
 using FinalDSA.Models;
 using FinalDSA.Views;
+using System.Text;
+
 
 namespace FinalDSA.Controllers
 {
@@ -95,14 +97,16 @@ namespace FinalDSA.Controllers
 
         private void HandleSearchExpenses()
         {
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.UTF8;
             Boolean endHandle = false;
             while (!endHandle) {
                 Console.Clear();
                 Console.WriteLine("╔════════════════════════════════════════════════════╗");
                 Console.WriteLine("║Bạn muốn thực hiện chức năng nào sau đây?           ║");
                 Console.WriteLine("╚════════════════════════════════════════════════════╝");
-                Console.WriteLine("║ 1 │ Tìm chi tiêu theo mô tả                        ║");
-                Console.WriteLine("║ 2 │ Tìm chi tiêu theo danh mục                     ║");
+                Console.WriteLine("║ 1 │ Tìm chi tiêu theo danh mục                     ║");
+                Console.WriteLine("║ 2 │ Tìm chi tiêu theo mô tả                        ║");
                 Console.WriteLine("║ 3 │ Tìm chi tiêu theo thời gian                    ║");
                 Console.WriteLine("║ 4 │ Thoát ra menu chính                            ║");
                 Console.WriteLine("║ 0 │ Đóng ứng dụng                                  ║");

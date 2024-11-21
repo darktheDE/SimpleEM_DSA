@@ -8,7 +8,11 @@ namespace FinalDSA.Views
 {
     public class ExpenseView
     {
-        public void DisplayExpenses(List<Expense> expenses)
+        /// <summary>
+        /// Hiển thị danh sách các chi tiêu dưới dạng bảng.
+        /// </summary>
+        /// <param name="expenses">Danh sách các chi tiêu cần hiển thị.</param>
+        public void DisplayExpenses(EList<Expense> expenses)
         {
             Console.WriteLine("\nDanh sách chi tiêu:");
             Console.WriteLine("{0,-5} {1,-20} {2,-15} {3,-25} {4,-30}", "STT", "Danh mục", "Số tiền", "Ngày", "Mô tả");
@@ -24,13 +28,19 @@ namespace FinalDSA.Views
                     expenses[i].Description);               // Mô tả
             }
         }
-
+        /// <summary>
+        /// Hiển thị số tiền còn lại trong giới hạn chi tiêu.
+        /// </summary>
+        /// <param name="remaining">Số tiền còn lại để chi tiêu.</param>
         public void DisplayRemainingSpending(double remaining)
         {
             Console.WriteLine($"\nSố tiền còn lại trong giới hạn chi tiêu: {remaining}");
         }
-
-        public void DisplayExpenseTable(List<Expense> expenses)
+        /// <summary>
+        /// Hiển thị bảng chi tiêu với khung bao quanh.
+        /// </summary>
+        /// <param name="expenses">Danh sách các chi tiêu cần hiển thị.</param>
+        public void DisplayExpenseTable(EList<Expense> expenses)
         {
             // In bảng chi tiêu hiện tại trong khung bao quanh
             Console.Clear();
@@ -58,13 +68,19 @@ namespace FinalDSA.Views
             Console.WriteLine("╚════════════════════════════════════════════════════════════════════════╝");
 
         }
-
+        /// <summary>
+        /// Hiển thị cảnh báo khi vượt quá giới hạn chi tiêu.
+        /// </summary>
+        /// <param name="message">Thông báo cảnh báo.</param>
         public void DisplayWarning(string message)
         {
             Console.WriteLine("╔════════════════════════════════════════════════════╗");
             Console.WriteLine("║CẢNH BÁO : BẠN ĐÃ VƯỢT QUÁ CHI TIÊU!!!              ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
         }
+        /// <summary>
+        /// Hiển thị menu chức năng của chương trình quản lý chi tiêu.
+        /// </summary>
 
         public void DisplayMenu()
         {
@@ -84,7 +100,10 @@ namespace FinalDSA.Views
             Console.WriteLine("║ 0 │ Thoát chương trình                             ║");
             Console.WriteLine("╚════════════════════════════════════════════════════╝");
         }
-
+        /// <summary>
+        /// Lấy lựa chọn từ người dùng.
+        /// </summary>
+        /// <returns>Lựa chọn của người dùng (số nguyên).</returns>
         public int GetUserChoice()
         {
             while (true)
@@ -106,7 +125,10 @@ namespace FinalDSA.Views
             }
         }
 
-
+        /// <summary>
+        /// Thu thập thông tin chi tiêu từ người dùng.
+        /// </summary>
+        /// <returns>Đối tượng Expense chứa thông tin chi tiêu.</returns>
         public Expense GetExpenseInput()
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -231,7 +253,10 @@ namespace FinalDSA.Views
             return new Expense(category, amount, date, description);
         }
 
-
+        /// <summary>
+        /// Lấy chỉ mục của chi tiêu từ người dùng.
+        /// </summary>
+        /// <returns>Chỉ mục của chi tiêu (số nguyên).</returns>
 
         public int GetExpenseIndex()
         {
@@ -251,7 +276,10 @@ namespace FinalDSA.Views
             return expends;
         }
 
-
+        /// <summary>
+        /// Lấy giới hạn chi tiêu từ người dùng.
+        /// </summary>
+        /// <returns>Giới hạn chi tiêu (số thực dương).</returns>
         public double GetSpendingLimit()
         {
             Console.WriteLine("╔════════════════════════════════════════════════════╗");
@@ -290,8 +318,11 @@ namespace FinalDSA.Views
                 }
             }
         }
-
-        public void DisplayCategoryPercentagesAsBarChart(List<(string category, double percentage, double amount)> categoryPercentages)
+        /// <summary>
+        /// Hiển thị biểu đồ thanh đánh giá mức độ chi tiêu theo danh mục.
+        /// </summary>
+        /// <param name="categoryPercentages">Danh sách chứa tên danh mục, phần trăm và số tiền chi tiêu.</param>
+        public void DisplayCategoryPercentagesAsBarChart(EList<(string category, double percentage, double amount)> categoryPercentages)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n╔════════════════════════════════════════════════════╗");
