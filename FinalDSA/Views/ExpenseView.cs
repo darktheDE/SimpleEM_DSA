@@ -8,7 +8,7 @@ namespace FinalDSA.Views
 {
     public class ExpenseView
     {
-        public void DisplayExpenses(List<Expense> expenses)
+        public void DisplayExpenses(EList<Expense> expenses)
         {
             Console.WriteLine("\nDanh sách chi tiêu:");
             Console.WriteLine("{0,-5} {1,-20} {2,-15} {3,-25} {4,-30}", "STT", "Danh mục", "Số tiền", "Ngày", "Mô tả");
@@ -30,7 +30,7 @@ namespace FinalDSA.Views
             Console.WriteLine($"\nSố tiền còn lại trong giới hạn chi tiêu: {remaining}");
         }
 
-        public void DisplayExpenseTable(List<Expense> expenses)
+        public void DisplayExpenseTable(EList<Expense> expenses)
         {
             // In bảng chi tiêu hiện tại trong khung bao quanh
             Console.Clear();
@@ -291,7 +291,7 @@ namespace FinalDSA.Views
             }
         }
 
-        public void DisplayCategoryPercentagesAsBarChart(List<(string category, double percentage, double amount)> categoryPercentages)
+        public void DisplayCategoryPercentagesAsBarChart(EList<(string category, double percentage, double amount)> categoryPercentages)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n╔════════════════════════════════════════════════════╗");
