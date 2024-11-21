@@ -60,7 +60,7 @@ namespace FinalDSA.Controllers
             do
             {
                 _view.DisplayMenu();
-                choice = InputInteger("\nNhập lựa chọn của bạn (1-4, hoặc 0 để thoát): ");
+                choice = InputInteger("\nNhập lựa chọn của bạn (1-5, hoặc 0 để thoát): ");
 
                 switch (choice)
                 {
