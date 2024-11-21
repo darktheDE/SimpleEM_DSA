@@ -1,0 +1,21 @@
+1231231
+an uong, 12000, 11/21/2024 4:56:53 PM, an kfc
+An uong, 15000, 11/21/2024 5:10:12 PM, An McDonald's
+Giải trí, 20000, 11/21/2024 6:30:45 PM, Xem phim
+Mua sắm, 35000, 11/21/2024 7:05:21 PM, Mua áo
+Vận chuyển, 5000, 11/21/2024 8:20:09 PM, Taxi
+An uong, 13000, 11/22/2024 8:45:33 AM, Bữa sáng
+Giải trí, 10000, 11/22/2024 9:12:28 AM, Trò chơi điện tử
+Mua sắm, 25000, 11/22/2024 11:00:10 AM, Mua sách
+Vận chuyển, 8000, 11/22/2024 12:05:52 PM, Xe bus
+An uong, 20000, 11/22/2024 1:50:18 PM, Pizza
+Giải trí, 18000, 11/22/2024 2:20:00 PM, Karaoke
+Mua sắm, 40000, 11/22/2024 3:30:22 PM, Mua giày
+Vận chuyển, 6000, 11/22/2024 4:40:15 PM, Grab
+An uong, 17000, 11/22/2024 5:25:42 PM, Cà phê
+Giải trí, 15000, 11/23/2024 6:00:03 AM, Đọc sách
+Mua sắm, 5000, 11/23/2024 8:00:30 AM, Quà tặng
+Vận chuyển, 12000, 11/23/2024 9:15:49 AM, Tàu điện ngầm
+An uong, 14000, 11/23/2024 10:05:11 AM, Bánh mì
+Giải trí, 22000, 11/23/2024 12:00:00 PM, Thăm bảo tàng
+Mua sắm, 28000, 11/23/2024 1:30:25 PM, Mua đồ điện tử

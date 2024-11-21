@@ -10,7 +10,7 @@ namespace FinalDSA.Models
 {
     public class ExpenseManager
     {
-        private List<Expense> _expenses;
+        private EList<Expense> _expenses;
         private double _spendingLimit;
         private readonly string _filePath = "data.txt";
 
@@ -19,7 +19,7 @@ namespace FinalDSA.Models
         /// </summary>
         public ExpenseManager(double spendingLimit)
         {
-            _expenses = new List<Expense>();
+            _expenses = new EList<Expense>();
             _spendingLimit = spendingLimit;
             LoadData();
         }
@@ -254,7 +254,7 @@ namespace FinalDSA.Models
 
 
         // Thuộc tính hoặc trường lưu kết quả tìm kiếm
-        private List<Expense> _searchResults = new List<Expense>();
+        private EList<Expense> _searchResults = new EList<Expense>();
 
         /// <summary>
         /// Tìm kiếm các khoản chi tiêu theo danh mục bằng Linear search
@@ -266,7 +266,7 @@ namespace FinalDSA.Models
             searchCategory = searchCategory.ToLower();
 
             // Duyệt qua danh sách _expenses và lọc ra các khoản chi tiêu khớp
-            var searchResults = new List<Expense>();
+            var searchResults = new EList<Expense>();
             foreach (var expense in _expenses)
             {
                 if (expense.Category.ToLower().Contains(searchCategory))
@@ -303,7 +303,7 @@ namespace FinalDSA.Models
             searchDescription = searchDescription.ToLower();
 
             // Linear search qua toàn bộ danh sách
-            List<Expense> searchResults = new List<Expense>();
+            EList<Expense> searchResults = new EList<Expense>();
 
             foreach (var expense in _expenses)
             {
@@ -344,7 +344,7 @@ namespace FinalDSA.Models
                 // Tìm kiếm ngày trong danh sách đã sắp xếp bằng Binary Search
                 int left = 0;
                 int right = _expenses.Count - 1;
-                List<Expense> filteredExpenses = new List<Expense>();
+                EList<Expense> filteredExpenses = new EList<Expense>();
 
                 while (left <= right)
                 {
@@ -360,7 +360,7 @@ namespace FinalDSA.Models
                         int tempLeft = middle - 1;
                         while (tempLeft >= 0 && _expenses[tempLeft].Date.Date == searchDate.Date)
                         {
-                            filteredExpenses.Insert(0, _expenses[tempLeft]);  // Thêm kết quả vào đầu danh sách
+                            filteredExpenses.Add(_expenses[tempLeft]);  // Thêm kết quả vào cuối danh sách
                             tempLeft--;
                         }
 
@@ -392,8 +392,8 @@ namespace FinalDSA.Models
                     _expenses = filteredExpenses;  // Tạm thời gán kết quả tìm kiếm vào _expenses
                     DisplayExpenses();  // Hiển thị kết quả
 
-                    // Khôi phục lại danh sách gốc sau khi hiển thị kết quả
-                    _expenses = _expenses.OrderBy(exp => exp.Date).ToList(); // Sắp xếp lại theo ngày để giữ trật tự ban đầu
+                    // Khôi phục lại danh sách gốc sau khi hiển thị kết quả (sắp xếp lại theo ngày)
+                    _expenses.Sort((a, b) => a.Date.CompareTo(b.Date));  // Sắp xếp lại theo ngày để giữ trật tự ban đầu
                 }
                 else
                 {
@@ -405,6 +405,7 @@ namespace FinalDSA.Models
                 Console.WriteLine("Định dạng ngày không hợp lệ. Vui lòng thử lại.");
             }
         }
+
 
         /// <summary>
         /// Đánh giá tình trạng chi tiêu dựa trên giới hạn chi tiêu và tổng số tiền đã chi.
@@ -445,9 +446,9 @@ namespace FinalDSA.Models
             }
             
         }
-        public List<(string category, double percentage, double amount)> GetCategoryPercentages()
+        public EList<(string category, double percentage, double amount)> GetCategoryPercentages()
         {
-            List<(string category, double percentage, double amount)> result = new List<(string, double, double)>();
+            EList<(string category, double percentage, double amount)> result = new EList<(string, double, double)>();
 
             double totalSpent = _expenses.Sum(expense => expense.Amount);
             foreach (var categoryGroup in _expenses.GroupBy(expense => expense.Category))
