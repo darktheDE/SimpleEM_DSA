@@ -444,6 +444,8 @@ namespace FinalDSA.Models
                 Console.ResetColor();
 
             }
+            Console.Write("Nhấn nút bất kì để tiếp tục: ");
+            Console.ReadKey();
             
         }
         public EList<(string category, double percentage, double amount)> GetCategoryPercentages()
