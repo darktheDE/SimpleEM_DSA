@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using FinalDSA.Controllers;
 using FinalDSA.Models;
 using FinalDSA.Views;
@@ -42,6 +43,8 @@ namespace ExpenseTracker
 
             if (File.Exists(filePath) && new FileInfo(filePath).Length > 0)
             {
+                Console.OutputEncoding = Encoding.UTF8;
+                Console.InputEncoding = Encoding.UTF8;
                 // Đọc giới hạn chi tiêu từ file nếu có dữ liệu
                 string[] noidung_txt = File.ReadAllLines(filePath);
                 double.TryParse(noidung_txt[0], out spendingLimit);

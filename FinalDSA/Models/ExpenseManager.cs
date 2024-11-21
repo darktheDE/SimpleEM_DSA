@@ -448,6 +448,15 @@ namespace FinalDSA.Models
             Console.ReadKey();
             
         }
+        /// <summary>
+        /// Tính toán tỷ lệ phần trăm chi tiêu theo từng danh mục.
+        /// </summary>
+        /// <returns>
+        /// Một danh sách các bộ giá trị (category, percentage, amount) trong đó:
+        /// - category: Tên danh mục chi tiêu.
+        /// - percentage: Tỷ lệ phần trăm chi tiêu của danh mục so với tổng chi tiêu.
+        /// - amount: Tổng số tiền đã chi tiêu cho danh mục.
+        /// </returns>
         public EList<(string category, double percentage, double amount)> GetCategoryPercentages()
         {
             EList<(string category, double percentage, double amount)> result = new EList<(string, double, double)>();
@@ -462,6 +471,14 @@ namespace FinalDSA.Models
 
             return result;
         }
+        /// <summary>
+        /// Đặt lại danh sách chi tiêu hàng tháng và thiết lập giới hạn chi tiêu mới.
+        /// </summary>
+        /// <param name="newSpendingLimit">Giới hạn chi tiêu mới cho tháng tiếp theo.</param>
+        /// <remarks>
+        /// Phương thức này xóa toàn bộ dữ liệu chi tiêu hiện tại và thay đổi giới hạn chi tiêu.
+        /// Hiển thị thông báo khi hoàn tất.
+        /// </remarks>
         public void ResetMonthlyExpenses(double newSpendingLimit)
         {
             _expenses.Clear();
