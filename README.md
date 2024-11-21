@@ -21,11 +21,18 @@
 1. **Expense Entry and Tracking**  
    - Record, view, and store daily expenses in `data.txt`.
    
-2. **Sorting by Time**  
-   - Automatically sorts expense entries by timestamp for easy tracking.
+2. **Sorting**  
+   - Automatically sorts expense entries by timestamp, category, description for easy tracking.
 
 3. **User-Friendly Console UI**  
    - Presents data in a clear, structured format.
+
+4. **Searching**  
+   - Search expense by timestamp, category, description.
+
+5. **Evaluate Spend Tracking**  
+   - Warning user if they total spend over 70% or over 100%
+   - Reset Monthly Expenses
 
 ---
 
@@ -41,6 +48,9 @@
     
   - **`ExpenseManager.cs`:**  
     Handles operations on expenses such as adding, retrieving, and sorting. Acts as a core data manager.
+
+  -  **`EList.cs`:**  
+    Data structure: Array List
 
 - **Views**
   - **`ExpenseView.cs`:**  
